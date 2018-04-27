@@ -5,15 +5,22 @@ const jwt           	= require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
     var Model = sequelize.define('User', {
-        first     : DataTypes.STRING,
-        last      : DataTypes.STRING,
-        email     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email invalid."} }},
-        phone     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
-        password  : DataTypes.STRING,
+        username    : DataTypes.STRING,
+        email       : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Emailfred invalid."} }},
+        phone       : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        password    : DataTypes.STRING,
     });
 
     Model.associate = function(models){
-        
+        Model.belongsTo(models.Peg, {
+            foreignKey: 'id_peg',
+            onDelete: 'CASCADE'
+        });
+
+        Model.belongsTo(models.Hakakses, {
+            foreignKey: 'id_hakakses',
+            onDelete: 'CASCADE'
+        });
     };
 
     Model.beforeSave(async (user, options) => {

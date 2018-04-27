@@ -14,7 +14,7 @@ const create = async function(req, res){
         [err, user] = await to(authService.createUser(body));
 
         if(err) return ReE(res, err, 422);
-        return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
+        return ReS(res, {message:'Successfully created new user.'}, 201);
     }
 }
 module.exports.create = create;
@@ -22,10 +22,18 @@ module.exports.create = create;
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let user = req.user;
-
+    console.log(user);
     return ReS(res, {user:user.toWeb()});
 }
 module.exports.get = get;
+
+const getAll = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    User.all().then(users => {    
+        return ReS(res, {users:users});
+      });
+}
+module.exports.getAll = getAll;
 
 const update = async function(req, res){
     let err, user, data

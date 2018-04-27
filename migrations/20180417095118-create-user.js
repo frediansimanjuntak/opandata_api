@@ -8,10 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      first: {
-        type: Sequelize.STRING
-      },
-      last: {
+      username: {
         type: Sequelize.STRING
       },
       email: {
@@ -22,6 +19,22 @@ module.exports = {
       phone: {
           type: Sequelize.STRING,
           unique : true,
+      },
+      id_peg: {
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Pegs',
+          key: 'id'
+        }
+      },
+      id_hakakses: {
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Hakakses',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

@@ -21,20 +21,12 @@ module.exports = {
           unique : true,
       },
       id_peg: {
-        type: Sequelize.UUID,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Pegs',
-          key: 'id'
-        }
+        allowNull: true,
+        type: Sequelize.INTEGER
       },
       id_hakakses: {
-        type: Sequelize.UUID,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Hakakses',
-          key: 'id'
-        }
+        allowNull: true,
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

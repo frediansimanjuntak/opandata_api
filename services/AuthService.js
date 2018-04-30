@@ -8,11 +8,13 @@ const getUniqueKeyFromBody = function(body){// this is so they can send in 3 opt
             unique_key = body.email
         }else if(typeof body.phone != 'undefined'){
             unique_key = body.phone
+        }else if(typeof body.username != 'undefined'){
+            unique_key = body.username
         }else{
             unique_key = null;
         }
     }
-
+    console.log(unique_key);
     return unique_key;
 }
 module.exports.getUniqueKeyFromBody = getUniqueKeyFromBody;
@@ -53,9 +55,10 @@ const authUser = async function(userInfo){//returns token
     let unique_key;
     let auth_info = {};
     auth_info.status = 'login';
+    console.log('ui'+userInfo);
     unique_key = getUniqueKeyFromBody(userInfo);
 
-    if(!unique_key) TE('Please enter an email or phone number to login');
+    if(!unique_key) TE('Please enter username or email or phone number to login');
 
 
     if(!userInfo.password) TE('Please enter a password to login');
@@ -74,8 +77,15 @@ const authUser = async function(userInfo){//returns token
         [err, user] = await to(User.findOne({where:{phone:unique_key }}));
         if(err) TE(err.message);
 
+    }
+    else if(unique_key){
+        auth_info.method='username';
+
+        [err, user] = await to(User.findOne({where:{username:unique_key }}));
+        if(err) TE(err.message);
+
     }else{
-        TE('A valid email or phone number was not entered');
+        TE('A valid username or email or phone number was not entered');
     }
 
     if(!user) TE('Not registered');

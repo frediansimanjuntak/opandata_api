@@ -8,18 +8,23 @@ module.exports = (sequelize, DataTypes) => {
         username    : DataTypes.STRING,
         email       : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Emailfred invalid."} }},
         phone       : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        id_peg: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        id_hakakses: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
         password    : DataTypes.STRING,
     });
 
     Model.associate = function(models){
-        Model.belongsTo(models.Peg, {
-            foreignKey: 'id_peg',
-            onDelete: 'CASCADE'
+        this.m_peg = this.hasMany(models.m_peg, {
+            foreignKey:'id_peg'
         });
-
-        Model.belongsTo(models.Hakakses, {
-            foreignKey: 'id_hakakses',
-            onDelete: 'CASCADE'
+        this.m_hakakses = this.hasMany(models.m_hakakses, {
+            foreignKey:'id_hakakses'
         });
     };
 

@@ -1,30 +1,22 @@
-const Form = require('../models').Form;
-// const form;
+const DataSet = require('../models').DataSet;
+// const dataset;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    let err, form;
-    let form_info = req.body;
-
-    [err, form] = await to(Form.create(form_info));
+    let err, dataset;
+    let dataset_info = req.body;
+    [err, dataset] = await to(DataSet.create(dataset_info));
     if(err) return ReE(res, err, 422);
-    let form_json = form.toWeb();
-    return ReS(res,{form:form_json}, 201);
+    console.log(dataset);
+    let dataset_json = dataset.toWeb();
+    return ReS(res,{dataset:dataset_json}, 201);
 }
 module.exports.create = create;
 
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    Form.findAll({
-        include: [{
-            model:m_opd, 
-            attributes:['id_opd', 'nama_opd', 'akronim_opd', 'kepala_opd', 'link', 'logo']
-        },{
-            model:dataset,
-            attributes:['id', 'nama']
-        }]
-    }).then(forms => {    
-        return ReS(res, {forms:forms}, 201);
+    DataSet.findAll().then(datasets => {    
+        return ReS(res, {datasets:datasets}, 201);
     });
 }
 module.exports.getAll = getAll;
@@ -32,25 +24,25 @@ module.exports.getAll = getAll;
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
-    Form.findById(id).then(form => {    
-        return ReS(res, {form:form}, 201);
+    DataSet.findById(id).then(dataset => {    
+        return ReS(res, {dataset:dataset}, 201);
     });
 }
 module.exports.get = get;
 
 const update = async function(req, res){
     let id = req.params.id;
-    let form_info = req.body;
-    Form.update(form_info, { where: { id: id }
-    }).then(form => {    
-        return ReS(res, {form:form}, 201);
+    let dataset_info = req.body;
+    DataSet.update(dataset_info, { where: { id: id }
+    }).then(dataset => {    
+        return ReS(res, {dataset:dataset}, 201);
     });
 }
 module.exports.update = update;
 
 const remove = async function(req, res){
     let id = req.params.id;
-    Form.destroy({
+    DataSet.destroy({
         where: {
           id: id
         },

@@ -47,11 +47,6 @@ module.exports = (sequelize, DataTypes) => {
   });
   m_peg.associate = function(models) {
     this.Users = this.hasOne(models.User, {foreignKey: 'id_peg'});
-    // m_peg.hasOne(models.User);
-    // m_peg.belongsTo(models.User);
-    // this.Users = this.belongsTo(models.User, {
-    //   foreignKey: 'id_peg', targetKey: 'id_peg'
-    // });
   };
   return m_peg;
 };

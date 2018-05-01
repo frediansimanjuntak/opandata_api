@@ -5,8 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     ket_hakakses: DataTypes.STRING
   }, {});
   m_hakakses.associate = function(models) {
-
-    // this.Users = this.hasOne(models.User, {foreignKey: 'id_hakakses'});
     this.Users = this.hasMany(models.User, {foreignKey: 'id_hakakses'});
   };
   return m_hakakses;

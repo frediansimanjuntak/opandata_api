@@ -1,21 +1,21 @@
-const m_m_peg = require('../models').m_m_peg;
+const m_opd = require('../models').m_opd;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    let err, m_peg_;
-    let m_peg_info = req.body;
+    let err, m_opd_;
+    let m_opd_info = req.body;
 
-    [err, m_peg_] = await to(m_peg.create(m_peg_info));
+    [err, m_opd_] = await to(m_opd.create(m_opd_info));
     if(err) return ReE(res, err, 422);
-    let m_peg_json = m_peg_.toWeb();
-    return ReS(res,{m_peg:m_peg_json}, 201);
+    let m_opd_json = m_opd_.toWeb();
+    return ReS(res,{m_opd:m_opd_json}, 201);
 }
 module.exports.create = create;
 
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    m_peg.findAll().then(m_pegs => {    
-        return ReS(res, {m_pegs:m_pegs}, 201);
+    m_opd.findAll().then(m_opds => {    
+        return ReS(res, {m_opds:m_opds}, 201);
     });
 }
 module.exports.getAll = getAll;
@@ -23,8 +23,8 @@ module.exports.getAll = getAll;
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
-    m_peg.findById(id).then(m_peg_ => {    
-        return ReS(res, {m_peg:m_peg_}, 201);
+    m_opd.findById(id).then(m_opd_ => {    
+        return ReS(res, {m_opd:m_opd_}, 201);
     });
 }
 module.exports.get = get;
@@ -32,10 +32,10 @@ module.exports.get = get;
 const update = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
-    let m_peg_info = req.body;
-    m_peg.update(m_peg_info, { where: { id: id }
-    }).then(m_peg_ => {    
-        return ReS(res, {m_peg:m_peg_}, 201);
+    let m_opd_info = req.body;
+    m_opd.update(m_opd_info, { where: { id: id }
+    }).then(m_opd_ => {    
+        return ReS(res, {m_opd:m_opd_}, 201);
     });
 }
 module.exports.update = update;
@@ -43,13 +43,13 @@ module.exports.update = update;
 const remove = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
-    m_peg.destroy({
+    m_opd.destroy({
         where: {
           id: id
         },
         truncate: false
-    }).then(m_peg_ => {    
-        return ReS(res, {message:'Deleted m_pegawai'}, 204);
+    }).then(m_opd_ => {    
+        return ReS(res, {message:'Deleted m_opd'}, 204);
     });
 }
 module.exports.remove = remove;

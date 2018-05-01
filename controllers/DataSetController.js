@@ -31,6 +31,7 @@ const get = function(req, res){
 module.exports.get = get;
 
 const update = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
     let dataset_info = req.body;
     DataSet.update(dataset_info, { where: { id: id }
@@ -41,6 +42,7 @@ const update = async function(req, res){
 module.exports.update = update;
 
 const remove = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
     DataSet.destroy({
         where: {

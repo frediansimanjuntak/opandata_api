@@ -39,6 +39,7 @@ const get = function(req, res){
 module.exports.get = get;
 
 const update = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
     let form_info = req.body;
     Form.update(form_info, { where: { id: id }
@@ -49,14 +50,15 @@ const update = async function(req, res){
 module.exports.update = update;
 
 const remove = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
     Form.destroy({
         where: {
           id: id
         },
         truncate: false
-    }).then(dataset => {    
-        return ReS(res, {message:'Deleted dataset'}, 204);
+    }).then(form => {    
+        return ReS(res, {message:'Deleted form'}, 204);
     });
 }
 module.exports.remove = remove;

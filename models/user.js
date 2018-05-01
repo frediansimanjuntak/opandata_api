@@ -9,23 +9,19 @@ module.exports = (sequelize, DataTypes) => {
         email       : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Emailfred invalid."} }},
         phone       : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
         id_peg: {
-            type: DataTypes.INTEGER,
-            allowNull: true
+            type: DataTypes.CHAR(18),
+            allowNull: false
         },
         id_hakakses: {
-            type: DataTypes.INTEGER,
-            allowNull: true
+            type: DataTypes.TINYINT(2),
+            allowNull: false
         },
         password    : DataTypes.STRING,
     });
 
     Model.associate = function(models){
-        this.m_peg = this.hasMany(models.m_peg, {
-            foreignKey:'id_peg'
-        });
-        this.m_hakakses = this.hasMany(models.m_hakakses, {
-            foreignKey:'id_hakakses'
-        });
+        this.m_peg = this.belongsTo(models.m_peg, {foreignKey: 'id_peg'});
+        this.m_hakakses = this.belongsTo(models.m_hakakses, {foreignKey: 'id_hakakses'});
     };
 
     Model.beforeSave(async (user, options) => {

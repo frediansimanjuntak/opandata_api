@@ -2,7 +2,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('m_hakakses', {
-      id_hakakses: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -13,14 +13,6 @@ module.exports = {
       },
       ket_hakakses: {
         type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },

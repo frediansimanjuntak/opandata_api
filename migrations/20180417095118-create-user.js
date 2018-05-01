@@ -19,14 +19,20 @@ module.exports = {
       phone: {
           type: Sequelize.STRING,
           unique : true,
-      },
+      },      
       id_peg: {
-        allowNull: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.CHAR(18),
+        references: {
+          model: 'm_peg',
+          key: 'id'
+        }
       },
       id_hakakses: {
-        allowNull: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.TINYINT(2),
+        references: {
+          model: 'm_hakakses',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

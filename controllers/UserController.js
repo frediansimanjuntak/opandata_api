@@ -1,4 +1,6 @@
 const User          = require('../models').User;
+const m_peg          = require('../models').m_peg;
+const m_hakakses          = require('../models').m_hakakses;
 const authService   = require('./../services/AuthService');
 
 const create = async function(req, res){
@@ -29,7 +31,15 @@ module.exports.get = get;
 
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    User.all().then(users => {    
+    User.findAll({
+        include: [{
+            model:m_peg, 
+            attributes:['id', 'nama']
+        },{
+            model:m_hakakses,
+            attributes:['id', 'hakakses']
+        }]
+    }).then(users => {    
         return ReS(res, {users:users});
       });
 }

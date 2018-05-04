@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     link: DataTypes.STRING,
     logo: DataTypes.STRING
-  }, {});
+  }, {
+    freezeTableName: true
+  });
   m_opd.associate = function(models) {
     // associations can be defined here
     this.Forms = this.hasMany(models.Form, {foreignKey: 'id_opd'});

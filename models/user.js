@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Model.associate = function(models){
-        this.m_peg = this.belongsTo(models.m_peg, {foreignKey: 'id_peg', targetKey: 'id_peg'});
-        // this.m_hakakses = this.belongsTo(models.m_hakakses, {foreignKey: 'id_hakakses'});
+        this.m_peg = this.belongsTo(models.m_peg, {foreignKey: 'UserPeg', targetKey: 'id_peg'});
+        this.m_hakakses = this.belongsTo(models.m_hakakses, {foreignKey: 'UserHakakses', targetKey: 'id_hakakses'});
     };
 
     Model.beforeSave(async (user, options) => {

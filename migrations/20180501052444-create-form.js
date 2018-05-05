@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       id_opd: {
-        type: Sequelize.INTEGER(9),
+        type: Sequelize.INTEGER,
         references: {
           model: 'm_opd',
           key: 'id_opd'
@@ -39,6 +39,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Forms');
+    return queryInterface.dropTable('forms');
   }
 };

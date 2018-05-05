@@ -1,6 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('m_hakakses', {
+    id_hakakses: {
+        type: DataTypes.TINYINT(2),
+        allowNull: false
+    },
     hakakses: DataTypes.STRING,
     ket_hakakses: DataTypes.STRING
   }, {

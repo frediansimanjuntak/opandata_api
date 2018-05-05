@@ -1,6 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('m_peg', {
+    id_peg: {
+        type: DataTypes.CHAR(18),
+        allowNull: false
+    },
     nama: DataTypes.STRING,
     gelar_depan: DataTypes.STRING,
     gelar_belakang: DataTypes.STRING,

@@ -2,6 +2,7 @@ const User 			= require('./../models').user;
 const validator     = require('validator');
 
 const getUniqueKeyFromBody = function(body){// this is so they can send in 3 options unique_key, email, or phone and it will work
+    console.log("body_"+body.unique_key);
     let unique_key = body.unique_key;
     if(typeof unique_key==='undefined'){
         if(typeof body.email != 'undefined'){
@@ -14,7 +15,7 @@ const getUniqueKeyFromBody = function(body){// this is so they can send in 3 opt
             unique_key = null;
         }
     }
-    console.log(unique_key);
+    console.log('uniques' + unique_key);
     return unique_key;
 }
 module.exports.getUniqueKeyFromBody = getUniqueKeyFromBody;
@@ -27,27 +28,32 @@ const createUser = async function(userInfo){
 
     unique_key = getUniqueKeyFromBody(userInfo);
     if(!unique_key) TE('An email or phone number was not entered.');
-
-    if(validator.isEmail(unique_key)){
-        auth_info.method = 'email';
-        userInfo.email = unique_key;
-
-        [err, user] = await to(User.create(userInfo));
-        if(err) TE('user already exists with that email');
-
-        return user;
-
-    }else if(validator.isMobilePhone(unique_key, 'any')){//checks if only phone number was sent
-        auth_info.method = 'phone';
-        userInfo.phone = unique_key;
-
-        [err, user] = await to(User.create(userInfo));
-        if(err) TE('user already exists with that phone number');
-
-        return user;
-    }else{
-        TE('A valid email or phone number was not entered.');
+    [err, user] = await to(User.create(userInfo));
+    if(err) {
+        console.log(err); TE('user already exists');
     }
+
+    return user;
+    // if(validator.isEmail(unique_key)){
+    //     auth_info.method = 'email';
+    //     userInfo.email = unique_key;
+
+    //     [err, user] = await to(User.create(userInfo));
+    //     if(err) console.log(err); TE('user already exists with that email');
+
+    //     return user;
+
+    // }else if(validator.isMobilePhone(unique_key, 'any')){//checks if only phone number was sent
+    //     auth_info.method = 'phone';
+    //     userInfo.phone = unique_key;
+
+    //     [err, user] = await to(User.create(userInfo));
+    //     if(err) TE('user already exists with that phone number');
+
+    //     return user;
+    // }else{
+    //     TE('A valid email or phone number was not entered.');
+    // }
 }
 module.exports.createUser = createUser;
 

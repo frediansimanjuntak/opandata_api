@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Model.associate = function(models) {
     // associations can be defined here
-    this.forms = this.hasMany(models.form, {foreignKey: 'id_opd'});
+    // this.forms = this.hasMany(models.form, {foreignKey: 'id_opd'});
   };
   return Model;
 };

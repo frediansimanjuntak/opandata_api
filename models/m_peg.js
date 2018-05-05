@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true
   });
   m_peg.associate = function(models) {
-    this.Users = this.hasOne(models.User, {foreignKey: 'id_peg'});
+    this.users = this.hasOne(models.user, {foreignKey: 'id_peg'});
   };
   return m_peg;
 };

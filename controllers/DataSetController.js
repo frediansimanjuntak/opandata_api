@@ -1,4 +1,4 @@
-const DataSet = require('../models').DataSet;
+const DataSet = require('../models').dataset;
 // const dataset;
 
 const create = async function(req, res){

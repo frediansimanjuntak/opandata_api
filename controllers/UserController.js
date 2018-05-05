@@ -1,4 +1,4 @@
-const User          = require('../models').User;
+const User          = require('../models').user;
 const m_peg          = require('../models').m_peg;
 const m_hakakses          = require('../models').m_hakakses;
 const authService   = require('./../services/AuthService');

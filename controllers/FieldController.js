@@ -1,4 +1,5 @@
-const Field = require('../models').Field;
+const Field = require('../models').field;
+const form = require('../models').form;
 // const field;
 
 const create = async function(req, res){

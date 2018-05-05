@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true
   });
   m_hakakses.associate = function(models) {
-    this.Users = this.hasMany(models.User, {foreignKey: 'id_hakakses'});
+    this.users = this.hasMany(models.user, {foreignKey: 'id_hakakses'});
   };
   return m_hakakses;
 };

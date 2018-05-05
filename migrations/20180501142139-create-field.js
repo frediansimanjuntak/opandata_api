@@ -9,7 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_form: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'm_opd',
+          key: 'id_opd'
+        }
       },
       nama: {
         type: Sequelize.STRING

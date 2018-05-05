@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var m_opd = sequelize.define('m_opd', {
+  var Model = sequelize.define('m_opd', {
     nama_opd: DataTypes.STRING,
     akronim_opd: DataTypes.STRING,
     kepala_opd: DataTypes.STRING,
@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     freezeTableName: true
   });
-  m_opd.associate = function(models) {
+  Model.associate = function(models) {
     // associations can be defined here
     this.forms = this.hasMany(models.form, {foreignKey: 'id_opd'});
   };
-  return m_opd;
+  return Model;
 };

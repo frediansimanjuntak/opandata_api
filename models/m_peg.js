@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var m_peg = sequelize.define('m_peg', {
+  var Model = sequelize.define('m_peg', {
     nama: DataTypes.STRING,
     gelar_depan: DataTypes.STRING,
     gelar_belakang: DataTypes.STRING,
@@ -45,8 +45,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     freezeTableName: true
   });
-  m_peg.associate = function(models) {
+  Model.associate = function(models) {
     this.users = this.hasOne(models.user, {foreignKey: 'id_peg'});
   };
-  return m_peg;
+  return Model;
 };

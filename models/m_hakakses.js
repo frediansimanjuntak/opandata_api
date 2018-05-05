@@ -2,8 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('m_hakakses', {
     id_hakakses: {
-        type: DataTypes.TINYINT(2),
-        allowNull: false
+        type: DataTypes.TINYINT,
+        allowNull: false,
+        primaryKey: true,
     },
     hakakses: DataTypes.STRING,
     ket_hakakses: DataTypes.STRING
@@ -11,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true
   });
   Model.associate = function(models) {
-    this.users = this.hasMany(models.user, {foreignKey: 'UserHakakses', sourceKey: 'id_hakakses'});
+    this.users = this.hasMany(models.user, {foreignKey: 'id_hakakses'});
   };
   return Model;
 };

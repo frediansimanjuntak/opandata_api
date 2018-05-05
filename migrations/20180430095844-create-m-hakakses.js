@@ -4,9 +4,8 @@ module.exports = {
     return queryInterface.createTable('m_hakakses', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.TINYINT(2)
       },
       hakakses: {
         type: Sequelize.STRING

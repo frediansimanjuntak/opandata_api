@@ -10,18 +10,18 @@ module.exports = (sequelize, DataTypes) => {
         phone       : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
         id_peg: {
             type: DataTypes.CHAR(18),
-            allowNull: false
+            allowNull: false,
         },
         id_hakakses: {
-            type: DataTypes.TINYINT(2),
-            allowNull: false
+            type: DataTypes.TINYINT,
+            allowNull: false,
         },
         password    : DataTypes.STRING,
     });
 
     Model.associate = function(models){
-        this.m_peg = this.belongsTo(models.m_peg, {foreignKey: 'UserPeg', targetKey: 'id_peg'});
-        this.m_hakakses = this.belongsTo(models.m_hakakses, {foreignKey: 'UserHakakses', targetKey: 'id_hakakses'});
+        this.m_peg = this.belongsTo(models.m_peg, {foreignKey: 'id_peg'});
+        // this.m_hakakses = this.belongsTo(models.m_hakakses, {foreignKey: 'id_hakakses'});
     };
 
     Model.beforeSave(async (user, options) => {

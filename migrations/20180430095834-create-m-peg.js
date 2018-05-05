@@ -2,11 +2,10 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('m_peg', {
-      id: {
+      id_peg: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.CHAR(18)
       },
       nama: {
         type: Sequelize.STRING

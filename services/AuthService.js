@@ -1,4 +1,4 @@
-const User 			= require('./../models').User;
+const User 			= require('./../models').user;
 const validator     = require('validator');
 
 const getUniqueKeyFromBody = function(body){// this is so they can send in 3 options unique_key, email, or phone and it will work

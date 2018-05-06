@@ -7,10 +7,16 @@ const create = async function(req, res){
     let err, field;
     let field_info = req.body;
 
-    [err, field] = await to(Field.create(field_info));
+    [err, field] = await to(Field.bulkCreate(field_info));
     if(err) return ReE(res, err, 422);
-    let field_json = field.toWeb();
-    return ReS(res,{field:field_json}, 201);
+    Field.findAll({
+        include: [{
+            model:form,
+            attributes:['id', 'nama', 'id_opd', 'id_dataset']
+        }]
+    }).then(fields => {    
+        return ReS(res, {fields:fields}, 201);
+    });
 }
 module.exports.create = create;
 
@@ -30,7 +36,12 @@ module.exports.getAll = getAll;
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
-    Field.findById(id).then(field => {    
+    Field.findById(id,{
+        include: [{
+            model:form,
+            attributes:['id', 'nama', 'id_opd', 'id_dataset']
+        }]
+    }).then(field => {    
         return ReS(res, {field:field}, 201);
     });
 }

@@ -61,7 +61,6 @@ const authUser = async function(userInfo){//returns token
     let unique_key;
     let auth_info = {};
     auth_info.status = 'login';
-    console.log('ui'+userInfo);
     unique_key = getUniqueKeyFromBody(userInfo);
 
     if(!unique_key) TE('Please enter username or email or phone number to login');
@@ -74,7 +73,6 @@ const authUser = async function(userInfo){//returns token
         auth_info.method='email';
 
         [err, user_] = await to(user.findOne({where:{email:unique_key}}));
-        console.log(err, user_, unique_key);
         if(err) TE(err.message);
 
     }else if(validator.isMobilePhone(unique_key, 'any')){//checks if only phone number was sent
@@ -96,7 +94,7 @@ const authUser = async function(userInfo){//returns token
 
     if(!user_) TE('Not registered');
 
-    [err, user_] = await to(user.comparePassword(userInfo.password));
+    [err, user_] = await to(user_.comparePassword(userInfo.password));
 
     if(err) TE(err.message);
 

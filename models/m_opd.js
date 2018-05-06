@@ -1,6 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('m_opd', {
+    id_opd: {
+      type: DataTypes.INTEGER(9),
+      primaryKey: true,
+    },
     nama_opd: DataTypes.STRING,
     akronim_opd: DataTypes.STRING,
     kepala_opd: DataTypes.STRING,
@@ -12,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     link: DataTypes.STRING,
     logo: DataTypes.STRING
   }, {
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false
   });
   Model.associate = function(models) {
     // associations can be defined here

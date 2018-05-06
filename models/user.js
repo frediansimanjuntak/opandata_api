@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.CHAR(18),
             allowNull: false,
         },
-        id_hakakses: {
-            type: DataTypes.TINYINT,
+        id_hakaskses: {
+            type: DataTypes.TINYINT(2),
             allowNull: false,
         },
         password    : DataTypes.STRING,
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Model.associate = function(models){
         // this.m_peg = this.belongsTo(models.m_peg, {foreignKey: 'id_peg'});
-        // this.m_hakakses = this.belongsTo(models.m_hakakses, {foreignKey: 'id_hakakses'});
+        // this.m_hakakses = this.belongsTo(models.m_hakakses, {foreignKey: 'id_hakaskses'});
     };
 
     Model.beforeSave(async (user, options) => {

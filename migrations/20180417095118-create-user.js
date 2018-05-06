@@ -24,14 +24,14 @@ module.exports = {
         type: Sequelize.CHAR(18),
         references: {
           model: 'm_peg',
-          key: 'id'
+          key: 'id_peg'
         }
       },
       id_hakakses: {
         type: Sequelize.TINYINT(2),
         references: {
           model: 'm_hakakses',
-          key: 'id'
+          key: 'id_hakaskses'
         }
       },
       createdAt: {

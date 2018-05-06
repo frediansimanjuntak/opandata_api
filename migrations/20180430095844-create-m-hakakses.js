@@ -2,7 +2,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('m_hakakses', {
-      id: {
+      id_hakaskses: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.TINYINT(2)

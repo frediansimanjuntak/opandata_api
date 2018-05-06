@@ -3,8 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('m_peg', {
     id_peg: {
       type: DataTypes.CHAR(18),
-      allowNull: false,
-          primaryKey: true,
+      primaryKey: true,
     },
     nama: DataTypes.STRING,
     gelar_depan: DataTypes.STRING,
@@ -48,10 +47,11 @@ module.exports = (sequelize, DataTypes) => {
     tentang_peg: DataTypes.STRING,
     foto_peg: DataTypes.STRING
   }, {
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false
   });
   Model.associate = function(models) {
-    // this.users = this.hasOne(models.user, {foreignKey: 'id_peg'});
+    // this.users = this.hasMany(models.user, {foreignKey: 'id_peg'});
   };
   return Model;
 };

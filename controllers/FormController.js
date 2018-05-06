@@ -11,7 +11,7 @@ const create = async function(req, res){
     [err, form] = await to(Form.create(form_info));
     if(err) return ReE(res, err, 422);
     let form_json = form.toWeb();
-    return ReS(res,{form:form_json}, 201);
+    return ReS(res,{data:form_json}, 201);
 }
 module.exports.create = create;
 
@@ -23,7 +23,7 @@ const getAll = async function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(forms => {    
-        return ReS(res, {forms:forms}, 201);
+        return ReS(res, {data:forms}, 201);
     });
 }
 module.exports.getAll = getAll;
@@ -37,7 +37,7 @@ const get = function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(form => {    
-        return ReS(res, {form:form}, 201);
+        return ReS(res, {data:form}, 201);
     });
 }
 module.exports.get = get;
@@ -48,7 +48,14 @@ const update = async function(req, res){
     let form_info = req.body;
     Form.update(form_info, { where: { id: id }
     }).then(form => {    
-        return ReS(res, {form:form}, 201);
+        Form.findById(id, {
+            include: [{
+                model:dataset,
+                attributes:['id', 'nama']
+            }]
+        }).then(form => {    
+            return ReS(res, {data:form}, 201);
+        });
     });
 }
 module.exports.update = update;

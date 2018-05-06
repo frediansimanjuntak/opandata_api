@@ -15,7 +15,7 @@ const create = async function(req, res){
             attributes:['id', 'nama', 'id_opd', 'id_dataset']
         }]
     }).then(fields => {    
-        return ReS(res, {fields:fields}, 201);
+        return ReS(res, {data:fields}, 201);
     });
 }
 module.exports.create = create;
@@ -28,7 +28,7 @@ const getAll = async function(req, res){
             attributes:['id', 'nama', 'id_opd', 'id_dataset']
         }]
     }).then(fields => {    
-        return ReS(res, {fields:fields}, 201);
+        return ReS(res, {data:fields}, 201);
     });
 }
 module.exports.getAll = getAll;
@@ -42,7 +42,7 @@ const get = function(req, res){
             attributes:['id', 'nama', 'id_opd', 'id_dataset']
         }]
     }).then(field => {    
-        return ReS(res, {field:field}, 201);
+        return ReS(res, {data:field}, 201);
     });
 }
 module.exports.get = get;
@@ -53,7 +53,14 @@ const update = async function(req, res){
     let field_info = req.body;
     Field.update(field_info, { where: { id: id }
     }).then(field => {    
-        return ReS(res, {field:field}, 201);
+        Field.findById(id,{
+            include: [{
+                model:form,
+                attributes:['id', 'nama', 'id_opd', 'id_dataset']
+            }]
+        }).then(field => {    
+            return ReS(res, {data:field}, 201);
+        });
     });
 }
 module.exports.update = update;

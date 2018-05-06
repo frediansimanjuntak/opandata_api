@@ -19,9 +19,6 @@ const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     Form.findAll({
         include: [{
-            model:m_opd, 
-            attributes:['id_opd', 'nama_opd', 'akronim_opd', 'kepala_opd', 'link', 'logo']
-        },{
             model:dataset,
             attributes:['id', 'nama']
         }]
@@ -34,7 +31,12 @@ module.exports.getAll = getAll;
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
-    Form.findById(id).then(form => {    
+    Form.findById(id, {
+        include: [{
+            model:dataset,
+            attributes:['id', 'nama']
+        }]
+    }).then(form => {    
         return ReS(res, {form:form}, 201);
     });
 }

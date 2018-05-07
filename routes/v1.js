@@ -19,9 +19,11 @@ router.get('/', function(req, res, next) {
 
 /* User */
 router.post('/register', UserController.create);                                             
-router.get('/me', passport.authenticate('jwt', {session:false}), UserController.get);      
+router.get('/me', passport.authenticate('jwt', {session:false}), UserController.getOwn);  
+router.get('/user/:id', passport.authenticate('jwt', {session:false}), UserController.get);     
 router.get('/users', passport.authenticate('jwt', {session:false}), UserController.getAll);   
-router.put('/users', passport.authenticate('jwt', {session:false}), UserController.update);   
+router.put('/users', passport.authenticate('jwt', {session:false}), UserController.updateOwn); 
+router.put('/user/:id', passport.authenticate('jwt', {session:false}), UserController.update);    
 router.delete('/users', passport.authenticate('jwt', {session:false}), UserController.remove);  
 router.post('/users/login', UserController.login);
 

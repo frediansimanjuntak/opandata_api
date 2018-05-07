@@ -3,7 +3,7 @@ const m_opd = require('../models').m_opd;
 const dataset = require('../models').dataset;
 const fs = require('fs')
   , Log = require('log')
-  , log = fs.createWriteStream('useractivity.log');
+  , log = new Log('debug', fs.createWriteStream('useractivity.log'));
 // const form;
 
 const create = async function(req, res){

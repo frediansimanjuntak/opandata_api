@@ -3,8 +3,8 @@ const m_peg          = require('../models').m_peg;
 const m_hakakses          = require('../models').m_hakakses;
 const authService   = require('./../services/AuthService');
 const fs = require('fs')
-        , Log = require('log')
-        , log = new Log('debug', fs.createWriteStream('useractivity.log'));
+  , Log = require('log')
+  , log = new Log('debug', fs.createWriteStream('useractivity.log'));
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -24,11 +24,21 @@ const create = async function(req, res){
 }
 module.exports.create = create;
 
-const get = async function(req, res){
+const getOwn = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let user = req.user;
-    log.info('user '+req.user.username+' get data from user with id user'+ user.id);
+    log.info('user '+req.user.username+' get own data from user with id user'+ user.id);
     return ReS(res, {user:user.toWeb()});
+}
+module.exports.getOwn = getOwn;
+
+const get = function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let id = req.params.id;
+    User.findById(id).then(user => {    
+        log.info('user '+req.user.username+' get data from form with id form'+ id);
+        return ReS(res, {data:user}, 201);
+    });
 }
 module.exports.get = get;
 
@@ -46,13 +56,13 @@ const getAll = async function(req, res){
         }
     ) ) )
     .then( users => {
-        console.log(users)
+        // log.info('user '+req.user.username+' get all data from user');
         return ReS(res, { users })
     } )
 }
 module.exports.getAll = getAll;
 
-const update = async function(req, res){
+const updateOwn = async function(req, res){
     let err, user, data
     user = req.user;
     data = req.body;
@@ -65,6 +75,18 @@ const update = async function(req, res){
     }
     log.info('user '+user.username+' update user with id user'+ user.id);
     return ReS(res, {message :'Updated User: '+user.email});
+}
+module.exports.updateOwn = updateOwn;
+
+const update = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let id = req.params.id;
+    let user_info = req.body;
+    User.update(user_info, { where: { id: id }
+    }).then(field => {
+        log.info('user '+req.user.username+' update field with id field'+ id);
+        return ReS(res, {data:field}, 201);
+    });
 }
 module.exports.update = update;
 

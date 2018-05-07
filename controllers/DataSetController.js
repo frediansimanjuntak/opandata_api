@@ -1,7 +1,7 @@
 const DataSet = require('../models').dataset;
 const fs = require('fs')
   , Log = require('log')
-  , log = fs.createWriteStream('useractivity.log');
+  , log = new Log('debug', fs.createWriteStream('useractivity.log'));
 // const dataset;
 
 const create = async function(req, res){

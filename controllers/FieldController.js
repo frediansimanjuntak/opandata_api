@@ -2,7 +2,7 @@ const Field = require('../models').field;
 const form = require('../models').form;
 const fs = require('fs')
   , Log = require('log')
-  , log = fs.createWriteStream('useractivity.log');
+  , log = new Log('debug', fs.createWriteStream('useractivity.log'));
 // const field;
 
 const create = async function(req, res){

@@ -24,7 +24,7 @@ router.get('/user/:id', passport.authenticate('jwt', {session:false}), UserContr
 router.get('/users', passport.authenticate('jwt', {session:false}), UserController.getAll);   
 router.put('/users', passport.authenticate('jwt', {session:false}), UserController.updateOwn); 
 router.put('/user/:id', passport.authenticate('jwt', {session:false}), UserController.update);    
-router.delete('/users', passport.authenticate('jwt', {session:false}), UserController.remove);  
+router.delete('/user/:id', passport.authenticate('jwt', {session:false}), UserController.remove);  
 router.post('/users/login', UserController.login);
 
 /*Data set*/

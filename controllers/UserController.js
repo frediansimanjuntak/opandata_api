@@ -93,10 +93,15 @@ const update = async function(req, res){
 module.exports.update = update;
 
 const remove = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
     let user, err;
-    user = req.user;
-
-    [err, user] = await to(user.destroy());
+    let id = req.params.id;
+    [err, user] = await to(User.destroy({
+        where: {
+          id: id
+        },
+        truncate: false
+    }));
     if(err) return ReE(res, 'error occured trying to delete user');
 
     return ReS(res, {message:'Deleted User'}, 204);

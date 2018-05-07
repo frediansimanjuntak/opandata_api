@@ -38,10 +38,10 @@ const getAll = async function(req, res){
     .then( users => Promise.all( users.map( u => u.toWeb() ).map( 
         u => {
             return m_peg.findById( u.id_peg )
-            .then( m_peg_ => Object.assign( u, { peg: m_peg_.dataValues } ) )
+            .then( m_peg_ => Object.assign( u, { peg: m_peg_ } ) )
             .then( user_info => 
                 m_hakakses.findById(user_info.id_hakaskses)
-                .then( m_hakakses_ => Object.assign( user_info, { hakakses: m_hakakses_.dataValues } ) ) 
+                .then( m_hakakses_ => Object.assign( user_info, { hakakses: m_hakakses_ } ) ) 
             )
         }
     ) ) )

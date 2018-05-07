@@ -59,7 +59,7 @@ const getAll = async function(req, res){
     ) ) )
     .then( users => {
         // log.info('user '+req.user.username+' get all data from user');
-        return ReS(res, { users })
+        return ReS(res, { data:users })
     } )
 }
 module.exports.getAll = getAll;

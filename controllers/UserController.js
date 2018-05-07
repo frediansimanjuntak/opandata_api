@@ -35,10 +35,12 @@ module.exports.getOwn = getOwn;
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
-    User.findById(id).then(user => {    
-        log.info('user '+req.user.username+' get data from form with id form'+ id);
-        return ReS(res, {data:user}, 201);
-    });
+    User.findById(id).then( user => user.toWeb() )
+    .then( user => Promise.all([
+        m_peg.findById(user.id_peg),
+        m_hakakses.findById(user.id_hakaskses)
+    ]).then( ([peg, hakakses]) => Object.assign( user, { peg, hakakses } ) ) )
+    .then( user => ReS(res, {data: user}, 201) );
 }
 module.exports.get = get;
 

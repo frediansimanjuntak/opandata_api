@@ -38,6 +38,23 @@ const getAll = async function(req, res){
 }
 module.exports.getAll = getAll;
 
+const getAllByForm = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let idform = req.params.idform;
+    Field.findAll({where: {
+            id_form:idform
+        },
+        include: [{
+            model:form,
+            attributes:['id', 'nama', 'id_opd', 'id_dataset']
+        }]
+    }).then(fields => {    
+        log.info('user '+req.user.username+' get all data field');
+        return ReS(res, {data:fields}, 201);
+    });
+}
+module.exports.getAllByForm = getAllByForm;
+
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;

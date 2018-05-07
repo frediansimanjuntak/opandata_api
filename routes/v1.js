@@ -44,6 +44,7 @@ router.put('/form/:id', passport.authenticate('jwt', {session:false}), FormContr
 /* Field */
 router.post('/field', passport.authenticate('jwt', {session:false}), FieldController.create);
 router.get('/field', passport.authenticate('jwt', {session:false}), FieldController.getAll);
+router.get('/field/form/:idform', passport.authenticate('jwt', {session:false}), FieldController.getAllByForm);
 router.get('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.get);
 router.delete('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.remove);
 router.put('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.update);

@@ -1,5 +1,8 @@
 const Field = require('../models').field;
 const form = require('../models').form;
+const fs = require('fs')
+  , Log = require('log')
+  , log = fs.createWriteStream('useractivity.log');
 // const field;
 
 const create = async function(req, res){
@@ -15,6 +18,7 @@ const create = async function(req, res){
             attributes:['id', 'nama', 'id_opd', 'id_dataset']
         }]
     }).then(fields => {    
+        log.info('user '+req.user.username+' create field');
         return ReS(res, {data:fields}, 201);
     });
 }
@@ -28,6 +32,7 @@ const getAll = async function(req, res){
             attributes:['id', 'nama', 'id_opd', 'id_dataset']
         }]
     }).then(fields => {    
+        log.info('user '+req.user.username+' get all data field');
         return ReS(res, {data:fields}, 201);
     });
 }
@@ -42,6 +47,7 @@ const get = function(req, res){
             attributes:['id', 'nama', 'id_opd', 'id_dataset']
         }]
     }).then(field => {    
+        log.info('user '+req.user.username+' get data from field with id field'+ id);
         return ReS(res, {data:field}, 201);
     });
 }
@@ -59,6 +65,7 @@ const update = async function(req, res){
                 attributes:['id', 'nama', 'id_opd', 'id_dataset']
             }]
         }).then(field => {    
+            log.info('user '+req.user.username+' update field with id field'+ id);
             return ReS(res, {data:field}, 201);
         });
     });
@@ -74,6 +81,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(field => {    
+        log.info('user '+req.user.username+' remove field with id field'+ id);
         return ReS(res, {message:'Deleted field'}, 204);
     });
 }

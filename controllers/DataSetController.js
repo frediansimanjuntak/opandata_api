@@ -1,4 +1,7 @@
 const DataSet = require('../models').dataset;
+const fs = require('fs')
+  , Log = require('log')
+  , log = fs.createWriteStream('useractivity.log');
 // const dataset;
 
 const create = async function(req, res){
@@ -7,7 +10,7 @@ const create = async function(req, res){
     let dataset_info = req.body;
     [err, dataset] = await to(DataSet.create(dataset_info));
     if(err) return ReE(res, err, 422);
-    console.log(dataset);
+    log.info('user '+req.user.username+' create dataset');
     let dataset_json = dataset.toWeb();
     return ReS(res,{data:dataset_json}, 201);
 }
@@ -16,6 +19,7 @@ module.exports.create = create;
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     DataSet.findAll().then(datasets => {    
+        log.info('user '+req.user.username+' get all data dataset');
         return ReS(res, {data:datasets}, 201);
     });
 }
@@ -25,6 +29,7 @@ const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
     DataSet.findById(id).then(dataset => {    
+        log.info('user '+req.user.username+' get data from dataset with id dataset'+ id);
         return ReS(res, {data:dataset}, 201);
     });
 }
@@ -37,6 +42,7 @@ const update = async function(req, res){
     DataSet.update(dataset_info, { where: { id: id }
     }).then(dataset => {    
         DataSet.findById(id).then(dataset => {    
+            log.info('user '+req.user.username+' update dataset with id dataset'+ id);
             return ReS(res, {data:dataset}, 201);
         });
     });
@@ -52,6 +58,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(dataset => {    
+        log.info('user '+req.user.username+' remove dataset with id dataset'+ id);
         return ReS(res, {message:'Deleted dataset'}, 204);
     });
 }

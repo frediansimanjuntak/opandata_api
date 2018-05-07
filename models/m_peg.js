@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
   Model.associate = function(models) {
-    // this.users = this.hasMany(models.user, {foreignKey: 'id_peg'});
+    // this.users = this.hasOne(models.user, {foreignKey: 'id_peg'});
   };
   return Model;
 };

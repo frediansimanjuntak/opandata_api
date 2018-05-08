@@ -9,6 +9,7 @@ const HakaksesController = require('./../controllers/HakaksesController');
 const OpdController = require('./../controllers/OpdController');
 const PegController = require('./../controllers/PegController');
 const LogController = require('./../controllers/LogController');
+const BeritaController = require('./../controllers/BeritaController');
 const passport = require('passport');
 const path = require('path');
 
@@ -56,7 +57,10 @@ router.get('/peg/:id', PegController.get);
 
 /* Opd */
 router.get('/opd', OpdController.getAll);
-router.get('/opd/:id', OpdController.get);
+
+
+/* Berita */
+router.get('/berita', BeritaController.getAll);
 
 /* Hakakses */
 router.post('/hakakses', passport.authenticate('jwt', {session:false}), HakaksesController.create);

@@ -1,4 +1,3 @@
-const m_opd = require('../models').m_opd;
 var request = require("request")
 
 const url = "http://tanjungpinangkota.go.id/api/unitkerjA";

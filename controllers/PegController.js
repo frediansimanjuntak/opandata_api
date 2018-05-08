@@ -1,4 +1,3 @@
-const m_peg = require('../models').m_peg;
 const request = require("request");
 
 const url = "http://tanjungpinangkota.go.id/api/peg";

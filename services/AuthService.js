@@ -5,17 +5,12 @@ const getUniqueKeyFromBody = function(body){// this is so they can send in 3 opt
     console.log("body_"+body.unique_key);
     let unique_key = body.unique_key;
     if(typeof unique_key==='undefined'){
-        if(typeof body.email != 'undefined'){
-            unique_key = body.email
-        }else if(typeof body.phone != 'undefined'){
-            unique_key = body.phone
-        }else if(typeof body.username != 'undefined'){
+        if(typeof body.username != 'undefined'){
             unique_key = body.username
         }else{
             unique_key = null;
         }
     }
-    console.log('uniques' + unique_key);
     return unique_key;
 }
 module.exports.getUniqueKeyFromBody = getUniqueKeyFromBody;

@@ -1,10 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Model = sequelize.define('m_hakakses', {
-    id_hakaskses: {
-        type: DataTypes.TINYINT(2),
-        primaryKey: true,
-    },
+  var Model = sequelize.define('hakakses', {
     hakakses: DataTypes.STRING,
     ket_hakakses: DataTypes.STRING
   }, {
@@ -12,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
   Model.associate = function(models) {
-    // this.users = this.hasMany(models.user, {foreignKey: 'id_hakaskses'});
+    this.users = this.hasMany(models.user, {foreignKey: 'id_hakakses'});
   };
   return Model;
 };

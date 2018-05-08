@@ -11,28 +11,18 @@ module.exports = {
       username: {
         type: Sequelize.STRING
       },
-      email: {
+      nama_pegawai: {
           type: Sequelize.STRING,
-          allowNull: false,
-          unique: true
+          allowNull: true,
       },
-      phone: {
-          type: Sequelize.STRING,
-          unique : true,
-      },      
-      id_peg: {
-        type: Sequelize.CHAR(18),
-        references: {
-          model: 'm_peg',
-          key: 'id_peg'
-        }
+      NIP: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       id_hakakses: {
-        type: Sequelize.TINYINT(2),
-        references: {
-          model: 'm_hakakses',
-          key: 'id_hakaskses'
-        }
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

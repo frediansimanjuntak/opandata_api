@@ -11,8 +11,8 @@ module.exports = {
       id_form: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'm_opd',
-          key: 'id_opd'
+          model: 'form',
+          key: 'id'
         }
       },
       nama: {

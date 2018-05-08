@@ -14,6 +14,10 @@ module.exports = {
       keterangan: {
         type: Sequelize.STRING
       },
+      id_opd: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

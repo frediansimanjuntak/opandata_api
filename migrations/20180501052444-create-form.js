@@ -14,13 +14,6 @@ module.exports = {
       keterangan: {
         type: Sequelize.STRING
       },
-      id_opd: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'm_opd',
-          key: 'id_opd'
-        }
-      },
       id_dataset: {
         type: Sequelize.INTEGER,
         references: {

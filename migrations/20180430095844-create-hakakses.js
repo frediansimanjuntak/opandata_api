@@ -1,11 +1,11 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('m_hakakses', {
-      id_hakaskses: {
+    return queryInterface.createTable('hakakses', {
+      id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.TINYINT(2)
+        type: Sequelize.INTEGER
       },
       hakakses: {
         type: Sequelize.STRING
@@ -16,6 +16,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('m_hakakses');
+    return queryInterface.dropTable('hakakses');
   }
 };

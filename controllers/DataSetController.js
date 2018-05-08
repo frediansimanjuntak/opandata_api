@@ -1,8 +1,5 @@
 const DataSet = require('../models').dataset;
-const fs = require('fs')
-  , Log = require('log')
-  , log = new Log('debug', fs.createWriteStream('useractivity.log'));
-// const dataset;
+const LogController = require('./LogController');
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -10,7 +7,7 @@ const create = async function(req, res){
     let dataset_info = req.body;
     [err, dataset] = await to(DataSet.create(dataset_info));
     if(err) return ReE(res, err, 422);
-    log.info('user '+req.user.username+' create dataset');
+    LogController.create({username:req.user.username, nip:req.user.NIP, message:"create dataset"});
     let dataset_json = dataset.toWeb();
     return ReS(res,{data:dataset_json}, 201);
 }
@@ -19,7 +16,7 @@ module.exports.create = create;
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     DataSet.findAll().then(datasets => {    
-        log.info('user '+req.user.username+' get all data dataset');
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset"});
         return ReS(res, {data:datasets}, 201);
     });
 }
@@ -29,7 +26,7 @@ const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
     DataSet.findById(id).then(dataset => {    
-        log.info('user '+req.user.username+' get data from dataset with id dataset'+ id);
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get dataset"});
         return ReS(res, {data:dataset}, 201);
     });
 }
@@ -42,7 +39,7 @@ const update = async function(req, res){
     DataSet.update(dataset_info, { where: { id: id }
     }).then(dataset => {    
         DataSet.findById(id).then(dataset => {    
-            log.info('user '+req.user.username+' update dataset with id dataset'+ id);
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update dataset"});
             return ReS(res, {data:dataset}, 201);
         });
     });
@@ -58,7 +55,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(dataset => {    
-        log.info('user '+req.user.username+' remove dataset with id dataset'+ id);
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove dataset"});
         return ReS(res, {message:'Deleted dataset'}, 204);
     });
 }

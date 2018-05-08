@@ -1,9 +1,7 @@
 const Form = require('../models').form;
 const m_opd = require('../models').m_opd;
 const dataset = require('../models').dataset;
-const fs = require('fs')
-  , Log = require('log')
-  , log = new Log('debug', fs.createWriteStream('useractivity.log'));
+const LogController = require('./LogController');
 // const form;
 
 const create = async function(req, res){
@@ -13,7 +11,7 @@ const create = async function(req, res){
 
     [err, form] = await to(Form.create(form_info));
     if(err) return ReE(res, err, 422);
-    log.info('user '+req.user.username+' create form');
+    LogController.create({username:req.user.username, nip:req.user.NIP, message:"create form"});
     let form_json = form.toWeb();
     return ReS(res,{data:form_json}, 201);
 }
@@ -27,7 +25,7 @@ const getAll = async function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(forms => {    
-        log.info('user '+req.user.username+' get all data from');
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all form"});
         return ReS(res, {data:forms}, 201);
     });
 }
@@ -42,7 +40,7 @@ const get = function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(form => {    
-        log.info('user '+req.user.username+' get data from form with id form'+ id);
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get form"});
         return ReS(res, {data:form}, 201);
     });
 }
@@ -60,7 +58,7 @@ const update = async function(req, res){
                 attributes:['id', 'nama']
             }]
         }).then(form => {    
-            log.info('user '+req.user.username+' update form with id form'+ id);
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update form"});
             return ReS(res, {data:form}, 201);
         });
     });
@@ -76,7 +74,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(form => {    
-        log.info('user '+req.user.username+' remove form with id form'+ id);
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove form"});
         return ReS(res, {message:'Deleted form'}, 204);
     });
 }

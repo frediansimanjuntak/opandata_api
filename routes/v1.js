@@ -8,6 +8,7 @@ const FieldController = require('./../controllers/FieldController');
 const HakaksesController = require('./../controllers/HakaksesController');
 const OpdController = require('./../controllers/OpdController');
 const PegController = require('./../controllers/PegController');
+const LogController = require('./../controllers/LogController');
 const passport = require('passport');
 const path = require('path');
 
@@ -50,18 +51,12 @@ router.delete('/field/:id', passport.authenticate('jwt', {session:false}), Field
 router.put('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.update);
 
 /* Peg */
-router.post('/peg', passport.authenticate('jwt', {session:false}), PegController.create);
-router.get('/peg', passport.authenticate('jwt', {session:false}), PegController.getAll);
-router.get('/peg/:id', passport.authenticate('jwt', {session:false}), PegController.get);
-router.delete('/peg/:id', passport.authenticate('jwt', {session:false}), PegController.remove);
-router.put('/peg/:id', passport.authenticate('jwt', {session:false}), PegController.update);
+router.get('/peg', PegController.getAll);
+router.get('/peg/:id', PegController.get);
 
 /* Opd */
-router.post('/opd', passport.authenticate('jwt', {session:false}), OpdController.create);
-router.get('/opd', passport.authenticate('jwt', {session:false}), OpdController.getAll);
-router.get('/opd/:id', passport.authenticate('jwt', {session:false}), OpdController.get);
-router.delete('/opd/:id', passport.authenticate('jwt', {session:false}), OpdController.remove);
-router.put('/opd/:id', passport.authenticate('jwt', {session:false}), OpdController.update);
+router.get('/opd', OpdController.getAll);
+router.get('/opd/:id', OpdController.get);
 
 /* Hakakses */
 router.post('/hakakses', passport.authenticate('jwt', {session:false}), HakaksesController.create);
@@ -69,4 +64,8 @@ router.get('/hakakses', passport.authenticate('jwt', {session:false}), HakaksesC
 router.get('/hakakses/:id', passport.authenticate('jwt', {session:false}), HakaksesController.get);
 router.delete('/hakakses/:id', passport.authenticate('jwt', {session:false}), HakaksesController.remove);
 router.put('/hakakses/:id', passport.authenticate('jwt', {session:false}), HakaksesController.update);
+
+/* Log */
+router.get('/log', LogController.get);
+
 module.exports = router;

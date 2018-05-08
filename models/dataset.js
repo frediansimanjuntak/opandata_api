@@ -2,7 +2,11 @@
 module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('dataset', {
     nama: DataTypes.STRING,
-    keterangan: DataTypes.STRING
+    keterangan: DataTypes.STRING,
+    id_opd: {
+      type: DataTypes.STRING, 
+      allowNull: false
+    },
   }, {});
   Model.associate = function(models) {
     // associations can be defined here

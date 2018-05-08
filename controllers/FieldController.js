@@ -1,8 +1,6 @@
 const Field = require('../models').field;
 const form = require('../models').form;
-const fs = require('fs')
-  , Log = require('log')
-  , log = new Log('debug', fs.createWriteStream('useractivity.log'));
+const LogController = require('./LogController');
 // const field;
 
 const create = async function(req, res){
@@ -12,15 +10,8 @@ const create = async function(req, res){
 
     [err, field] = await to(Field.bulkCreate(field_info));
     if(err) return ReE(res, err, 422);
-    Field.findAll({
-        include: [{
-            model:form,
-            attributes:['id', 'nama', 'id_opd', 'id_dataset']
-        }]
-    }).then(fields => {    
-        log.info('user '+req.user.username+' create field');
-        return ReS(res, {data:fields}, 201);
-    });
+    LogController.create({username:req.user.username, nip:req.user.NIP, message:"create field"});
+    return ReS(res, {data:field}, 201);
 }
 module.exports.create = create;
 
@@ -29,10 +20,10 @@ const getAll = async function(req, res){
     Field.findAll({
         include: [{
             model:form,
-            attributes:['id', 'nama', 'id_opd', 'id_dataset']
+            attributes:['id', 'nama', 'id_dataset']
         }]
     }).then(fields => {    
-        log.info('user '+req.user.username+' get all data field');
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all field"});
         return ReS(res, {data:fields}, 201);
     });
 }
@@ -46,10 +37,10 @@ const getAllByForm = async function(req, res){
         },
         include: [{
             model:form,
-            attributes:['id', 'nama', 'id_opd', 'id_dataset']
+            attributes:['id', 'nama', 'id_dataset']
         }]
     }).then(fields => {    
-        log.info('user '+req.user.username+' get all data field');
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all field by form"});
         return ReS(res, {data:fields}, 201);
     });
 }
@@ -61,10 +52,10 @@ const get = function(req, res){
     Field.findById(id,{
         include: [{
             model:form,
-            attributes:['id', 'nama', 'id_opd', 'id_dataset']
+            attributes:['id', 'nama', 'id_dataset']
         }]
     }).then(field => {    
-        log.info('user '+req.user.username+' get data from field with id field'+ id);
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get field"});
         return ReS(res, {data:field}, 201);
     });
 }
@@ -79,10 +70,10 @@ const update = async function(req, res){
         Field.findById(id,{
             include: [{
                 model:form,
-                attributes:['id', 'nama', 'id_opd', 'id_dataset']
+                attributes:['id', 'nama', 'id_dataset']
             }]
         }).then(field => {    
-            log.info('user '+req.user.username+' update field with id field'+ id);
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update field"});
             return ReS(res, {data:field}, 201);
         });
     });
@@ -98,7 +89,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(field => {    
-        log.info('user '+req.user.username+' remove field with id field'+ id);
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove field"});
         return ReS(res, {message:'Deleted field'}, 204);
     });
 }

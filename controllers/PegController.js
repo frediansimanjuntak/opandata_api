@@ -32,22 +32,7 @@ const get = function(req, res){
 }
 module.exports.get = get;
 
-const getById = async function(id){
-    console.log(id);
-    // request({
-    //     url: url+"/"+id,
-    //     json: true
-    // }, function (error, response, body) {
-    
-    //     if (!error && response.statusCode === 200) {
-    //         console.log(body.pegawai[0]);
-    //         return body.pegawai[0];
-    //     }
-    // })
-    return 66
-}
-
-const getById2 = function(id) {
+const getById = function(id) {
     console.log(id);
     return new Promise( (solve, reject) => {
         request({
@@ -65,4 +50,4 @@ const getById2 = function(id) {
     } )
 }
 
-module.exports.getById = getById2;
+module.exports.getById = getById;

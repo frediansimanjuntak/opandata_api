@@ -1,13 +1,15 @@
-// const value = require('../models').value;
-const value;
+const Value = require('../models').value;
+const LogController = require('./LogController');
+// const value;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, value;
     let value_info = req.body;
 
-    [err, value] = await to(value.create(value_info));
+    [err, value] = await to(Value.create(value_info));
     if(err) return ReE(res, err, 422);
+    LogController.create({username:req.user.username, nip:req.user.NIP, message:"create value"});
     let value_json = value.toWeb();
     return ReS(res,{value:value_json}, 201);
 }
@@ -15,60 +17,112 @@ module.exports.create = create;
 
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    let user = req.user;
-    let err, values;
-
-    [err, values] = await to(user.getvalues({include: [ {association: value.Users} ] }));
-
-    let values_json =[]
-    for( let i in values){
-        let value = values[i];
-        let users =  value.Users;
-        let value_info = value.toWeb();
-        let users_info = [];
-        for (let i in users){
-            let user = users[i];
-            // let user_info = user.toJSON();
-            users_info.push({user:user.id});
-        }
-        value_info.users = users_info;
-        values_json.push(value_info);
-    }
-
-    console.log('c t', values_json);
-    return ReS(res, {values:values_json});
+    Value.findAll({
+        include: [{
+            model:form,
+            attributes:['id', 'nama']
+        },{
+            model:field,
+            attributes:['id', 'nama']
+        }]
+    }).then(values => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value"});
+        return ReS(res, {data:values}, 201);
+    });
 }
 module.exports.getAll = getAll;
 
+const getAllByField = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let idfield = req.params.idfield;
+    Value.findAll({where: {
+            id_field:idfield
+        },
+        include: [{
+            model:form,
+            attributes:['id', 'nama']
+        },{
+            model:field,
+            attributes:['id', 'nama']
+        }]
+    }).then(values => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value by field"});
+        return ReS(res, {data:values}, 201);
+    });
+}
+module.exports.getAllByField = getAllByField;
+
+const getAllByForm = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let idform = req.params.idform;
+    Value.findAll({where: {
+            id_form:idform
+        },
+        include: [{
+            model:form,
+            attributes:['id', 'nama']
+        },{
+            model:field,
+            attributes:['id', 'nama']
+        }]
+    }).then(values => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value by form"});
+        return ReS(res, {data:values}, 201);
+    });
+}
+module.exports.getAllByForm = getAllByForm;
+
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    let value = req.value;
-
-    return ReS(res, {value:value.toWeb()});
+    let id = req.params.id;
+    Value.findById(id, {
+        include: [{
+            model:form,
+            attributes:['id', 'nama']
+        },{
+            model:field,
+            attributes:['id', 'nama']
+        }]
+    }).then(value => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get value"});
+        return ReS(res, {data:value}, 201);
+    });
 }
 module.exports.get = get;
 
 const update = async function(req, res){
-    let err, value, data;
-    value = req.value;
-    data = req.body;
-    value.set(data);
-
-    [err, value] = await to(value.save());
-    if(err){
-        return ReE(res, err);
-    }
-    return ReS(res, {value:value.toWeb()});
+    res.setHeader('Content-Type', 'application/json');
+    let id = req.params.id;
+    let form_info = req.body;
+    Value.update(form_info, { where: { id: id }
+    }).then(value => {    
+        Value.findById(id, {
+            include: [{
+                model:form,
+                attributes:['id', 'nama']
+            },{
+                model:field,
+                attributes:['id', 'nama']
+            }]
+        }).then(value => {    
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update value"});
+            return ReS(res, {data:value}, 201);
+        });
+    });
 }
 module.exports.update = update;
 
 const remove = async function(req, res){
-    let value, err;
-    value = req.value;
-
-    [err, value] = await to(value.destroy());
-    if(err) return ReE(res, 'error occured trying to delete the value');
-
-    return ReS(res, {message:'Deleted value'}, 204);
+    res.setHeader('Content-Type', 'application/json');
+    let id = req.params.id;
+    Value.destroy({
+        where: {
+          id: id
+        },
+        truncate: false
+    }).then(value => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove value"});
+        return ReS(res, {message:'Deleted value'}, 204);
+    });
 }
 module.exports.remove = remove;

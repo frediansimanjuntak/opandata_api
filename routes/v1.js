@@ -5,6 +5,7 @@ const UserController 	= require('./../controllers/UserController');
 const DataSetController = require('./../controllers/DataSetController');
 const FormController = require('./../controllers/FormController');
 const FieldController = require('./../controllers/FieldController');
+const ValueController = require('./../controllers/ValueController');
 const HakaksesController = require('./../controllers/HakaksesController');
 const OpdController = require('./../controllers/OpdController');
 const PegController = require('./../controllers/PegController');
@@ -50,6 +51,15 @@ router.get('/field/form/:idform', passport.authenticate('jwt', {session:false}),
 router.get('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.get);
 router.delete('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.remove);
 router.put('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.update);
+
+/* Value */
+router.post('/value', passport.authenticate('jwt', {session:false}), ValueController.create);
+router.get('/values', passport.authenticate('jwt', {session:false}), ValueController.getAll);
+router.get('/values/form/:idform', passport.authenticate('jwt', {session:false}), ValueController.getAllByForm);
+router.get('/values/field/:idfield', passport.authenticate('jwt', {session:false}), ValueController.getAllByField);
+router.get('/value/:id', passport.authenticate('jwt', {session:false}), ValueController.get);
+router.delete('/value/:id', passport.authenticate('jwt', {session:false}), ValueController.remove);
+router.put('/value/:id', passport.authenticate('jwt', {session:false}), ValueController.update);
 
 /* Peg */
 router.get('/peg', PegController.getAll);

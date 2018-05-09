@@ -1,4 +1,6 @@
 const Value = require('../models').value;
+const form = require('../models').form;
+const field = require('../models').field;
 const LogController = require('./LogController');
 // const value;
 
@@ -7,11 +9,10 @@ const create = async function(req, res){
     let err, value;
     let value_info = req.body;
 
-    [err, value] = await to(Value.create(value_info));
+    [err, value] = await to(Value.bulkCreate(value_info));
     if(err) return ReE(res, err, 422);
     LogController.create({username:req.user.username, nip:req.user.NIP, message:"create value"});
-    let value_json = value.toWeb();
-    return ReS(res,{value:value_json}, 201);
+    return ReS(res,{value:value}, 201);
 }
 module.exports.create = create;
 

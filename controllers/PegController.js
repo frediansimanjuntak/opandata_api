@@ -32,14 +32,12 @@ const get = function(req, res){
 module.exports.get = get;
 
 const getById = function(id) {
-    console.log(id);
     return new Promise( (solve, reject) => {
         request({
             url: url+"/"+id,
             json: true
         }, function (error, response, body) {
             if (!error && response.statusCode === 200) {
-                console.log(body);
                 // return body.pegawai[0];
                 solve( body.pegawai[0] )
             } else {

@@ -2,18 +2,25 @@ const Form = require('../models').form;
 const m_opd = require('../models').m_opd;
 const dataset = require('../models').dataset;
 const LogController = require('./LogController');
+const DataSetController = require('./DataSetController');
 // const form;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, form;
     let form_info = req.body;
-
-    [err, form] = await to(Form.create(form_info));
-    if(err) return ReE(res, err, 422);
-    LogController.create({username:req.user.username, nip:req.user.NIP, message:"create form"});
-    let form_json = form.toWeb();
-    return ReS(res,{data:form_json}, 201);
+    DataSetController.checkdataset(req.user.id, form_info.id_dataset).then(dataset => {
+        if(dataset == true) {
+            Form.create(form_info).then(result => {                
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"create form"});
+                let form_json = result.toWeb();
+                return ReS(res,{data:form_json}, 201);
+            })
+        }
+        else{
+            return ReE(res, "don't have permission", 422);
+        }
+    })
 }
 module.exports.create = create;
 

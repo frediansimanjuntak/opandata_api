@@ -126,4 +126,27 @@ const login = async function(req, res){
     LogController.create({username:user.username, nip:user.NIP, message:"login"});
     return ReS(res, {token:user.getJWT(), user:user.toWeb()});
 }
-module.exports.login = login;
+module.exports.login = login; 
+
+const checkuser = function(id_user, id_dataset_opd) {
+    return new Promise( (solve, reject) => {
+        User.findById(id_user).then( user => user.toWeb() )
+        .then( user => Promise.all([
+            PegController.getById(user.NIP)
+        ]).then( ([peg]) => Object.assign( user, { peg } ) ) )
+        .then( user => {
+            if(user.id_hakakses == 3) {             
+                if(user.peg.id_opd == id_dataset_opd){
+                    solve (true);
+                }   
+                else {
+                    solve (false);
+                }
+            }
+            else{
+                solve (true);
+            }
+        });
+    } )
+}
+module.exports.checkuser = checkuser;

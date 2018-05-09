@@ -24,10 +24,22 @@ module.exports.create = create;
 
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    DataSet.findAll().then(datasets => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset"});
-        return ReS(res, {data:datasets}, 201);
-    });
+    UserController.getOpdUser(req.user.id).then(opd => {
+        if( req.user.id_hakakses == 3 ) {            
+            DataSet.findAll({where: {
+                id_opd:opd
+            }}).then(datasets => {    
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset"});
+                return ReS(res, {data:datasets}, 201);
+            });
+        }
+        else {            
+            DataSet.findAll().then(datasets => {    
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset"});
+                return ReS(res, {data:datasets}, 201);
+            });
+        }
+    })
 }
 module.exports.getAll = getAll;
 

@@ -150,3 +150,21 @@ const checkuser = function(id_user, id_dataset_opd) {
     } )
 }
 module.exports.checkuser = checkuser;
+
+const getOpdUser = function(id_user) {
+    return new Promise( (solve, reject) => {
+        User.findById(id_user).then( user => user.toWeb() )
+        .then( user => Promise.all([
+            PegController.getById(user.NIP)
+        ]).then( ([peg]) => Object.assign( user, { peg } ) ) )
+        .then( user => {
+            if(user){
+                solve(user.peg.id_opd);
+            }
+            else {
+                solve("null");
+            }
+        });
+    } )
+}
+module.exports.getOpdUser = getOpdUser;

@@ -103,6 +103,27 @@ const get = function(req, res){
 }
 module.exports.get = get;
 
+const getByGroup = function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let group = req.params.group;    
+    Value.findAll({
+        where: {
+            group:group
+        },
+        include: [{
+            model:form,
+            attributes:['id', 'nama']
+        },{
+            model:field,
+            attributes:['id', 'nama']
+        }]
+    }).then(value => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get value"});
+        return ReS(res, {data:value}, 201);
+    });
+}
+module.exports.getByGroup = getByGroup;
+
 const update = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;

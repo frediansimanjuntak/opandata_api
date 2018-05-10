@@ -38,13 +38,8 @@ const getAll = async function(req, res){
                 attributes:['id', 'nama']
             }]
         }).then(values => {    
-            var byfour = values.reduce((groups, n) => {  
-                (groups[n.group] = groups[n.group] || []).push(n);
-                return groups;
-            }, {});
-            console.log(byfour);
-            // LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value"});
-            return ReS(res, {data:byfour}, 201);
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value"});
+            return ReS(res, {data:values}, 201);
         });
     })
 }

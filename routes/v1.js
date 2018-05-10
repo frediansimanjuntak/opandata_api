@@ -66,7 +66,7 @@ router.get('/peg', PegController.getAll);
 router.get('/peg/:id', PegController.get);
 
 /* Opd */
-router.get('/opd', OpdController.getAll);
+router.get('/opd', passport.authenticate('jwt', {session:false}), OpdController.getAll);
 
 
 /* Berita */

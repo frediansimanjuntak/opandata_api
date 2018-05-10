@@ -5,31 +5,48 @@ const LogController = require('./LogController');
 // const value;
 
 const create = async function(req, res){
-    res.setHeader('Content-Type', 'application/json');
-    let err, value;
-    let value_info = req.body;
-
-    [err, value] = await to(Value.bulkCreate(value_info));
-    if(err) return ReE(res, err, 422);
-    LogController.create({username:req.user.username, nip:req.user.NIP, message:"create value"});
-    return ReS(res,{value:value}, 201);
+    return new Promise( (solve, reject) => {
+        res.setHeader('Content-Type', 'application/json');
+        let err, value;
+        let value_info = req.body;
+    
+        Value.findAll({
+            limit: 1,
+            where: {},
+            order: [ [ 'createdAt', 'DESC' ]]
+        }).then(function(data){
+            let group = data.length != 0 ? data[0].group : 0;
+            value_info.forEach(function(obj) { obj.group = group+1; });
+            Value.bulkCreate(value_info).then(results => {
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"create value"});
+                return ReS(res,{value:results}, 201);
+            })
+        })
+    })    
 }
 module.exports.create = create;
 
 const getAll = async function(req, res){
-    res.setHeader('Content-Type', 'application/json');
-    Value.findAll({
-        include: [{
-            model:form,
-            attributes:['id', 'nama']
-        },{
-            model:field,
-            attributes:['id', 'nama']
-        }]
-    }).then(values => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value"});
-        return ReS(res, {data:values}, 201);
-    });
+    return new Promise( (solve, reject) => {
+        res.setHeader('Content-Type', 'application/json');
+        Value.findAll({
+            include: [{
+                model:form,
+                attributes:['id', 'nama']
+            },{
+                model:field,
+                attributes:['id', 'nama']
+            }]
+        }).then(values => {    
+            var byfour = values.reduce((groups, n) => {  
+                (groups[n.group] = groups[n.group] || []).push(n);
+                return groups;
+            }, {});
+            console.log(byfour);
+            // LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value"});
+            return ReS(res, {data:byfour}, 201);
+        });
+    })
 }
 module.exports.getAll = getAll;
 

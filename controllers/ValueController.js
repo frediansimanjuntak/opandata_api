@@ -106,8 +106,8 @@ module.exports.get = get;
 const update = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
-    let form_info = req.body;
-    Value.update(form_info, { where: { id: id }
+    let value_info = req.body;
+    Value.update(value_info, { where: { id: id }
     }).then(value => {    
         Value.findById(id, {
             include: [{
@@ -124,6 +124,42 @@ const update = async function(req, res){
     });
 }
 module.exports.update = update;
+
+const updateByGroup = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let group = req.params.group;    
+    let value_info = req.body;
+    Value.destroy({
+        where: {
+          group:group
+        },
+        truncate: false
+    }).then(value => {    
+        value_info.forEach(function(obj) { obj.group = group; });
+        Value.bulkCreate(value_info).then(results => {
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update value"});
+            return ReS(res, {data:results}, 201);
+        })
+    });
+}
+module.exports.updateByGroup = updateByGroup;
+
+const removeByGroup = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let group = req.params.group;    
+    let value_info = req.body;
+    Value.destroy({
+        where: {
+          group:group
+        },
+        truncate: false
+    }).then(value => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove value"});
+        return ReS(res, {message:'Deleted value'}, 204);
+    });
+}
+module.exports.removeByGroup = removeByGroup;
+
 
 const remove = async function(req, res){
     res.setHeader('Content-Type', 'application/json');

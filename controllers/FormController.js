@@ -2,6 +2,7 @@ const Form = require('../models').form;
 const dataset = require('../models').dataset;
 const LogController = require('./LogController');
 const DataSetController = require('./DataSetController');
+const UserController = require('./UserController');
 // const form;
 
 const create = async function(req, res){
@@ -25,15 +26,33 @@ module.exports.create = create;
 
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    Form.findAll({
-        include: [{
-            model:dataset,
-            attributes:['id', 'nama']
-        }]
-    }).then(forms => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all form"});
-        return ReS(res, {data:forms}, 201);
-    });
+    UserController.getOpdUser(req.user.id).then(idopd => {
+        if( req.user.id_hakakses == 3 ) { 
+            Form.findAll({
+                include: [{
+                    model:dataset,
+                    attributes:['id', 'nama', 'id_opd'],                    
+                    where: {id_opd:idopd}
+                }]
+            })
+            .then(forms => {    
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all form"});
+                return ReS(res, {data:forms}, 201);
+            });
+        }
+        else {
+            Form.findAll({
+                include: [{
+                    model:dataset,
+                    attributes:['id', 'nama', 'id_opd']
+                }]
+            })
+            .then(forms => {    
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all form"});
+                return ReS(res, {data:forms}, 201);
+            });
+        } 
+    } )
 }
 module.exports.getAll = getAll;
 

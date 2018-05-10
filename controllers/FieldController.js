@@ -46,6 +46,22 @@ const getAllByForm = async function(req, res){
 }
 module.exports.getAllByForm = getAllByForm;
 
+const getAllByFormNonAuth = async function(req, res){
+    let form = req.params.form;
+    Field.findAll({where: {
+            id_form:form
+        },
+        include: [{
+            model:form,
+            attributes:['id', 'nama', 'id_dataset']
+        }]
+    }).then(fields => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all field by form"});
+        return ReS(res, {data:fields}, 201);
+    });
+}
+module.exports.getAllByFormNonAuth = getAllByFormNonAuth;
+
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;

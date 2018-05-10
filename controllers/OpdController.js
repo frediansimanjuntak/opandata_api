@@ -24,6 +24,18 @@ const getAll = async function(req, res){
 }
 module.exports.getAll = getAll;
 
+const getAllNonAuth = function(req, res){
+    request({
+        url: url,
+        json: true
+    }, function (error, response, body) {    
+        if (!error && response.statusCode === 200) {
+            return ReS(res, {data:body.opd}, 201);
+        }
+    })
+}
+module.exports.getAllNonAuth = getAllNonAuth;
+
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
@@ -44,8 +56,7 @@ const getAllOpd = async function(){
         request({
             url: url,
             json: true
-        }, function (error, response, body) {
-        
+        }, function (error, response, body) {        
             if (!error && response.statusCode === 200) {
                 solve( body.opd )
             }

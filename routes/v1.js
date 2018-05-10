@@ -36,6 +36,7 @@ router.get('/dataset', passport.authenticate('jwt', {session:false}), DataSetCon
 router.get('/dataset/:id', passport.authenticate('jwt', {session:false}), DataSetController.get);
 router.delete('/dataset/:id', passport.authenticate('jwt', {session:false}), DataSetController.remove);
 router.put('/dataset/:id', passport.authenticate('jwt', {session:false}), DataSetController.update);
+router.get('/dataset/opd/no-auth/:opd', DataSetController.getAllByOpdNonAuth);
 
 /* Form */
 router.post('/form', passport.authenticate('jwt', {session:false}), FormController.create);
@@ -43,6 +44,7 @@ router.get('/form', passport.authenticate('jwt', {session:false}), FormControlle
 router.get('/form/:id', passport.authenticate('jwt', {session:false}), FormController.get);
 router.delete('/form/:id', passport.authenticate('jwt', {session:false}), FormController.remove);
 router.put('/form/:id', passport.authenticate('jwt', {session:false}), FormController.update);
+router.get('/form/dataset/no-auth/:dataset', FormController.getAllByDatasetNonAuth);
 
 /* Field */
 router.post('/field', passport.authenticate('jwt', {session:false}), FieldController.create);
@@ -51,6 +53,7 @@ router.get('/field/form/:idform', passport.authenticate('jwt', {session:false}),
 router.get('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.get);
 router.delete('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.remove);
 router.put('/field/:id', passport.authenticate('jwt', {session:false}), FieldController.update);
+router.get('/field/form/no-auth/:form', FieldController.getAllByFormNonAuth);
 
 /* Value */
 router.post('/value', passport.authenticate('jwt', {session:false}), ValueController.create);
@@ -63,12 +66,14 @@ router.put('/value/:id', passport.authenticate('jwt', {session:false}), ValueCon
 router.get('/value/get/group/:group', passport.authenticate('jwt', {session:false}), ValueController.getByGroup);
 router.post('/value/edit/group/:group', passport.authenticate('jwt', {session:false}), ValueController.updateByGroup);
 router.delete('/value/remove/group/:group', passport.authenticate('jwt', {session:false}), ValueController.removeByGroup);
+router.get('/values/field/no-auth/:field', ValueController.getAllByFieldNonAuth);
 
 /* Peg */
 router.get('/peg', PegController.getAll);
 router.get('/peg/:id', PegController.get);
 
 /* Opd */
+router.get('/opd/no-auth', OpdController.getAllNonAuth);
 router.get('/opd', passport.authenticate('jwt', {session:false}), OpdController.getAll);
 
 

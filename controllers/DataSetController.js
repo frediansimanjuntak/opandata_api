@@ -43,6 +43,19 @@ const getAll = async function(req, res){
 }
 module.exports.getAll = getAll;
 
+const getAllByOpdNonAuth = async function(req, res){
+    let opd = req.params.opd;
+    DataSet.findAll({
+        where: {
+            id_opd:opd
+        }
+    }).then(datasets => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset"});
+        return ReS(res, {data:datasets}, 201);
+    });
+}
+module.exports.getAllByOpdNonAuth = getAllByOpdNonAuth;
+
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;

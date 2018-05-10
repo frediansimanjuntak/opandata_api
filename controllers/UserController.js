@@ -74,18 +74,17 @@ const getAll = async function(req, res){
 module.exports.getAll = getAll;
 
 const updateOwn = async function(req, res){
-    let err, user, data
+    let err, user, data    
     user = req.user;
     data = req.body;
     user.set(data);
-
     [err, user] = await to(user.save());
     if(err){
         if(err.message=='Validation error') err = 'The email address or phone number is already in use';
         return ReE(res, err);
     }
     LogController.create({username:req.user.username, nip:req.user.NIP, message:"update own account"});
-    return ReS(res, {message :'Updated User: '+user.email});
+    return ReS(res, {message :'Updated User: '+user.username});
 }
 module.exports.updateOwn = updateOwn;
 
@@ -93,11 +92,13 @@ const update = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
     let user_info = req.body;
-    User.update(user_info, { where: { id: id }
-    }).then(field => {
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"update user account"});
-        return ReS(res, {data:field}, 201);
-    });
+    
+    User.findById(id)
+    .then( user => 
+        user.set(user_info)
+    )
+    .then ( user_data => user_data.save())
+    .then ( result => ReS( res, {message :'Updated User: '+result.username}, 201 ) )
 }
 module.exports.update = update;
 

@@ -55,6 +55,7 @@ router.get('/dataset/no-auth/:id', DataSetController.getNonAuth);
 router.get('/dataset/opd/no-auth/:opd', DataSetController.getAllByOpdNonAuth);
 router.get('/datasets/no-auth', DataSetController.getAllNonAuth);
 router.get('/datasets/home-page', DataSetController.getAllHomePage);
+router.post('/datasets/search', DataSetController.searchNonAuth);
 
 /* Form */
 router.post('/form', passport.authenticate('jwt', {session:false}), FormController.create);

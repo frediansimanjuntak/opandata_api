@@ -1,6 +1,8 @@
 const DataSet = require('../models').dataset;
 const LogController = require('./LogController');
 const UserController = require('./UserController');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -47,6 +49,19 @@ const getAllNonAuth = async function(req, res){
     DataSet.findAll().then(datasets => ReS(res, {data:datasets}, 201));
 }
 module.exports.getAllNonAuth = getAllNonAuth;
+
+const searchNonAuth = async function(req, res){
+    let key = req.body.search;
+    
+    console.log(key);
+    DataSet.findAll({where:{
+        nama: {
+            [Op.like]: '%'+key+'%'
+          }
+        }
+    } ).then(datasets => ReS(res, {data:datasets}, 201));
+}
+module.exports.searchNonAuth = searchNonAuth;
 
 const getAllHomePage = async function(req, res){
     DataSet.findAll({ limit: 12, order: [['createdAt', 'DESC']] }).then(datasets => ReS(res, {data:datasets}, 201));

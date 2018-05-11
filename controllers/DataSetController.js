@@ -43,11 +43,15 @@ const getAll = async function(req, res){
 }
 module.exports.getAll = getAll;
 
-
 const getAllNonAuth = async function(req, res){
     DataSet.findAll().then(datasets => ReS(res, {data:datasets}, 201));
 }
 module.exports.getAllNonAuth = getAllNonAuth;
+
+const getAllHomePage = async function(req, res){
+    DataSet.findAll({ limit: 12, order: [['createdAt', 'DESC']] }).then(datasets => ReS(res, {data:datasets}, 201));
+}
+module.exports.getAllHomePage = getAllHomePage;
 
 const getAllByOpdNonAuth = async function(req, res){
     let opd = req.params.opd;

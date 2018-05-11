@@ -1,6 +1,6 @@
 var Log = require('log')
   , fs = require('fs')
-  , write = fs.createWriteStream(__dirname + '/useractivity.log')
+  , write = fs.createWriteStream(__dirname + '/useractivity.txt')
   , log = new Log('debug', write);
 
 const create = function(req, res){ 

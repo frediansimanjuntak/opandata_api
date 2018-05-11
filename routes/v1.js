@@ -52,6 +52,7 @@ router.get('/dataset/:id', passport.authenticate('jwt', {session:false}), DataSe
 router.delete('/dataset/:id', passport.authenticate('jwt', {session:false}), DataSetController.remove);
 router.put('/dataset/:id', passport.authenticate('jwt', {session:false}), DataSetController.update);
 router.get('/dataset/opd/no-auth/:opd', DataSetController.getAllByOpdNonAuth);
+router.get('/dataset/no-auth', DataSetController.getAllNonAuth);
 
 /* Form */
 router.post('/form', passport.authenticate('jwt', {session:false}), FormController.create);

@@ -43,6 +43,16 @@ const getAll = async function(req, res){
 }
 module.exports.getAll = getAll;
 
+
+const getAllNonAuth = async function(req, res){
+    let opd = req.params.opd;
+    DataSet.findAll().then(datasets => {    
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset"});
+        return ReS(res, {data:datasets}, 201);
+    });
+}
+module.exports.getAllNonAuth = getAllNonAuth;
+
 const getAllByOpdNonAuth = async function(req, res){
     let opd = req.params.opd;
     DataSet.findAll({

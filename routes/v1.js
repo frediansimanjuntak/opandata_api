@@ -51,6 +51,7 @@ router.get('/dataset', passport.authenticate('jwt', {session:false}), DataSetCon
 router.get('/dataset/:id', passport.authenticate('jwt', {session:false}), DataSetController.get);
 router.delete('/dataset/:id', passport.authenticate('jwt', {session:false}), DataSetController.remove);
 router.put('/dataset/:id', passport.authenticate('jwt', {session:false}), DataSetController.update);
+router.get('/dataset/no-auth/:id', DataSetController.getNonAuth);
 router.get('/dataset/opd/no-auth/:opd', DataSetController.getAllByOpdNonAuth);
 router.get('/datasets/no-auth', DataSetController.getAllNonAuth);
 router.get('/datasets/home-page', DataSetController.getAllHomePage);

@@ -73,6 +73,13 @@ const get = function(req, res){
 }
 module.exports.get = get;
 
+const getNonAuth = function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let id = req.params.id;
+    DataSet.findById(id).then(dataset => ReS(res, {data:dataset}, 201));
+}
+module.exports.getNonAuth = getNonAuth;
+
 const update = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;

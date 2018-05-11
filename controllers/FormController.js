@@ -61,16 +61,9 @@ const getAllByDatasetNonAuth = async function(req, res){
     Form.findAll({
         where: {
             id_dataset:dataset
-        },
-        include: [{
-            model:dataset,
-            attributes:['id', 'nama', 'id_opd']
-        }]
+        }
     })
-    .then(forms => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all form"});
-        return ReS(res, {data:forms}, 201);
-    });
+    .then(forms => ReS(res, {data:forms}, 201));
 }
 module.exports.getAllByDatasetNonAuth = getAllByDatasetNonAuth;
 

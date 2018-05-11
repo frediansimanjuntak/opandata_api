@@ -11,8 +11,23 @@ const OpdController = require('./../controllers/OpdController');
 const PegController = require('./../controllers/PegController');
 const LogController = require('./../controllers/LogController');
 const BeritaController = require('./../controllers/BeritaController');
+const InformasiSitusController = require('./../controllers/InformasiSitusController');
 const passport = require('passport');
+const multer = require('multer');
+const crypto = require('crypto');
+const mime = require('mime');
 const path = require('path');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/')
+  },
+  filename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      cb(null, raw.toString('hex') + Date.now() + '.' + mime.getExtension(file.mimetype));
+    });
+  }
+});
+var upload = multer({ storage: storage });
 
 require('./../middleware/passport')(passport)
 /* GET home page. */
@@ -89,5 +104,12 @@ router.put('/hakakses/:id', passport.authenticate('jwt', {session:false}), Hakak
 
 /* Log */
 router.get('/log', LogController.get);
+
+/* Informasi Situs */
+router.post('/informasi-situs', passport.authenticate('jwt', {session:false}), upload.single('photo'), InformasiSitusController.create);
+router.get('/informasi-situs', passport.authenticate('jwt', {session:false}), InformasiSitusController.getAll);
+router.get('/informasi-situs/:id', passport.authenticate('jwt', {session:false}), InformasiSitusController.get);
+router.delete('/informasi-situs/:id', passport.authenticate('jwt', {session:false}), InformasiSitusController.remove);
+router.put('/informasi-situs/:id', passport.authenticate('jwt', {session:false}), upload.single('photo'), InformasiSitusController.update);
 
 module.exports = router;

@@ -7,6 +7,8 @@ const express 		= require('express');
 const logger 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport      = require('passport');
+const multer        = require('multer');
+var upload  = multer({ dest: 'uploads/' });
 
 const v1 = require('./routes/v1');
 
@@ -14,7 +16,7 @@ const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 

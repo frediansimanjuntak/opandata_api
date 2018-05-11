@@ -82,6 +82,18 @@ const get = function(req, res){
 }
 module.exports.get = get;
 
+const getNonAuth = function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let id = req.params.id;
+    Form.findById(id, {
+        include: [{
+            model:dataset,
+            attributes:['id', 'nama']
+        }]
+    }).then(form => ReS(res, {data:form}, 201));
+}
+module.exports.getNonAuth = getNonAuth;
+
 const update = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;

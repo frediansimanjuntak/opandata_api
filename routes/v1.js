@@ -63,6 +63,7 @@ router.get('/form/:id', passport.authenticate('jwt', {session:false}), FormContr
 router.delete('/form/:id', passport.authenticate('jwt', {session:false}), FormController.remove);
 router.put('/form/:id', passport.authenticate('jwt', {session:false}), FormController.update);
 router.get('/form/dataset/no-auth/:dataset', FormController.getAllByDatasetNonAuth);
+router.get('/form/no-auth/:id', FormController.getNonAuth);
 
 /* Field */
 router.post('/field', passport.authenticate('jwt', {session:false}), FieldController.create);

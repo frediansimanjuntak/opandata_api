@@ -50,15 +50,8 @@ const getAllByFormNonAuth = async function(req, res){
     let form = req.params.form;
     Field.findAll({where: {
             id_form:form
-        },
-        include: [{
-            model:form,
-            attributes:['id', 'nama', 'id_dataset']
-        }]
-    }).then(fields => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all field by form"});
-        return ReS(res, {data:fields}, 201);
-    });
+        }
+    }).then(fields => ReS(res, {data:fields}, 201));
 }
 module.exports.getAllByFormNonAuth = getAllByFormNonAuth;
 
@@ -76,6 +69,17 @@ const get = function(req, res){
     });
 }
 module.exports.get = get;
+
+const getNonAuth = function(req, res){
+    let id = req.params.id;
+    Field.findById(id,{
+        include: [{
+            model:form,
+            attributes:['id', 'nama', 'id_dataset']
+        }]
+    }).then(field => ReS(res, {data:field}, 201));
+}
+module.exports.getNonAuth = getNonAuth;
 
 const update = async function(req, res){
     res.setHeader('Content-Type', 'application/json');

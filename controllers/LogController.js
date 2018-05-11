@@ -17,7 +17,7 @@ module.exports.create = create;
 
 const get = function(req, res){ 
     fs = require('fs')
-    fs.readFile(__dirname + '/useractivity.log', 'utf8', function (err,data) {
+    fs.readFile(__dirname + '/useractivity.txt', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
         }

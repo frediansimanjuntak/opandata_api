@@ -105,6 +105,22 @@ const getAllByForm = async function(req, res){
 }
 module.exports.getAllByForm = getAllByForm;
 
+const getAllByFormNonAuth = async function(req, res){
+    let idform = req.params.idform;
+    Value.findAll({where: {
+            id_form:idform
+        },
+        include: [{
+            model:form,
+            attributes:['id', 'nama']
+        },{
+            model:field,
+            attributes:['id', 'nama']
+        }]
+    }).then(values => ReS(res, {data:values}, 201));
+}
+module.exports.getAllByFormNonAuth = getAllByFormNonAuth;
+
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;

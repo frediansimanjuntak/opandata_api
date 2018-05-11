@@ -86,6 +86,7 @@ router.get('/value/get/group/:group', passport.authenticate('jwt', {session:fals
 router.post('/value/edit/group/:group', passport.authenticate('jwt', {session:false}), ValueController.updateByGroup);
 router.delete('/value/remove/group/:group', passport.authenticate('jwt', {session:false}), ValueController.removeByGroup);
 router.get('/values/field/no-auth/:field', ValueController.getAllByFieldNonAuth);
+router.get('/values/form/no-auth/:idform', ValueController.getAllByFormNonAuth);
 
 /* Peg */
 router.get('/peg', PegController.getAll);

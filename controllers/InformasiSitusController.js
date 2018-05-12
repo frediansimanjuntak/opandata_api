@@ -7,7 +7,6 @@ const create = async function(req, res){
         isi:req.body.isi,
         photo:req.file.filename
     }
-
     console.log(data);
     [err, informasi] = await to(Informasi_situs.create(data));
     if(err) return ReE(res, err, 422);
@@ -18,7 +17,6 @@ module.exports.create = create;
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     Informasi_situs.findAll().then(informasi => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all field"});
         return ReS(res, {data:informasi}, 201);
     });
 }
@@ -32,16 +30,16 @@ const get = function(req, res){
 module.exports.get = get;
 
 const update = async function(req, res){
-    let err, company, data;
     data = {
         isi:req.body.isi,
         photo:req.file.filename
     }
+    console.log(data);
     let id = req.params.id;
     Informasi_situs.update(data, { where: { id: id }
     }).then(informasi => {    
         Informasi_situs.findById(id).then(informasi => {    
-            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update dataset"});
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update informasi"});
             return ReS(res, {data:informasi}, 201);
         });
     });
@@ -57,8 +55,8 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(informasi => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove field"});
-        return ReS(res, {message:'Deleted field'}, 204);
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove informasi"});
+        return ReS(res, {message:'Deleted informasi'}, 204);
     });
 }
 module.exports.remove = remove;

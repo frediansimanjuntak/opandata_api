@@ -10,6 +10,7 @@ const HakaksesController = require('./../controllers/HakaksesController');
 const OpdController = require('./../controllers/OpdController');
 const PegController = require('./../controllers/PegController');
 const LogController = require('./../controllers/LogController');
+const LogoOpdController = require('./../controllers/LogoOpdController');
 const BeritaController = require('./../controllers/BeritaController');
 const InformasiSitusController = require('./../controllers/InformasiSitusController');
 const passport = require('passport');
@@ -113,9 +114,16 @@ router.get('/log', LogController.get);
 
 /* Informasi Situs */
 router.post('/informasi-situs', passport.authenticate('jwt', {session:false}), upload.single('photo'), InformasiSitusController.create);
-router.get('/informasi-situs', passport.authenticate('jwt', {session:false}), InformasiSitusController.getAll);
-router.get('/informasi-situs/:id', passport.authenticate('jwt', {session:false}), InformasiSitusController.get);
+router.get('/informasi-situs', InformasiSitusController.getAll);
+router.get('/informasi-situs/:id', InformasiSitusController.get);
 router.delete('/informasi-situs/:id', passport.authenticate('jwt', {session:false}), InformasiSitusController.remove);
 router.put('/informasi-situs/:id', passport.authenticate('jwt', {session:false}), upload.single('photo'), InformasiSitusController.update);
+
+/* Logo opd */
+router.post('/logo-opd', passport.authenticate('jwt', {session:false}), upload.single('photo'), LogoOpdController.create);
+router.get('/logo-opd', LogoOpdController.getAll);
+router.get('/logo-opd/:id', LogoOpdController.get);
+router.delete('/logo-opd/:id', passport.authenticate('jwt', {session:false}), LogoOpdController.remove);
+router.put('/logo-opd/:id', passport.authenticate('jwt', {session:false}), upload.single('photo'), LogoOpdController.update);
 
 module.exports = router;

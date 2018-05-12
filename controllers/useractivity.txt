@@ -1,0 +1,2 @@
+[Sat May 12 2018 07:12:39 GMT+0700 (SE Asia Standard Time)] INFO [2018-05-12 07:12:39] [196301241984101002 - admin] [update logo]
+[Sat May 12 2018 07:12:55 GMT+0700 (SE Asia Standard Time)] INFO [2018-05-12 07:12:55] [196301241984101002 - admin] [remove logo]

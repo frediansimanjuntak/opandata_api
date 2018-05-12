@@ -1,5 +1,6 @@
 const Informasi_situs = require('../models').informasi_situs;
 const LogController = require('./LogController');
+const path = require('path');
 
 const create = async function(req, res){
     let err, informasi;
@@ -16,16 +17,34 @@ module.exports.create = create;
 
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    Informasi_situs.findAll().then(informasi => {    
-        return ReS(res, {data:informasi}, 201);
-    });
+    Informasi_situs.findAll().then(informasi => Promise.all( informasi.map( i => i.toWeb() ).map( i => {
+        console.log(i);
+        return getFile(i.photo).then(result => Object.assign( i, { file: result } ))
+    } ) ) 
+    .then(results => {
+        return ReS(res, {data:results}, 201);
+    } ) )
+}
+module.exports.getAll = getAll;
+
+const getFile = async function(photo){
+    return new Promise( (solve, reject) => {
+        let file = path.join(__dirname, '../uploads/'+ photo);
+        // var file = __dirname + '/../../uploads/'+ photo;
+        solve(file);
+    })
 }
 module.exports.getAll = getAll;
 
 const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
-    Informasi_situs.findById(id).then(informasi => ReS(res, {data:informasi.toWeb()}) );
+    Informasi_situs.findById(id).then(informasi => informasi.toWeb()).then(informasi => Promise.all([
+        getFile(informasi.photo)
+    ]).then( ([file]) => Object.assign( informasi, { file } ) ) )
+    .then( informasi => ReS(res, {data: informasi}, 201) );
+        // ReS(res, {data:informasi.toWeb()}) 
+    // );
 }
 module.exports.get = get;
 

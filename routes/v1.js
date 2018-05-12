@@ -12,6 +12,7 @@ const PegController = require('./../controllers/PegController');
 const LogController = require('./../controllers/LogController');
 const LogoOpdController = require('./../controllers/LogoOpdController');
 const BeritaController = require('./../controllers/BeritaController');
+const DataSetCounterController = require('./../controllers/DataSetCounterController');
 const InformasiSitusController = require('./../controllers/InformasiSitusController');
 const passport = require('passport');
 const multer = require('multer');
@@ -125,5 +126,11 @@ router.get('/logo-opd', LogoOpdController.getAll);
 router.get('/logo-opd/:id', LogoOpdController.get);
 router.delete('/logo-opd/:id', passport.authenticate('jwt', {session:false}), LogoOpdController.remove);
 router.put('/logo-opd/:id', passport.authenticate('jwt', {session:false}), upload.single('photo'), LogoOpdController.update);
+
+/* Logo opd */
+router.post('/dataset-counter/:iddataset', DataSetCounterController.create);
+router.get('/dataset-counter', DataSetCounterController.getAll);
+router.get('/dataset-counter/:id', DataSetCounterController.get);
+router.get('/dataset-counter/dataset/:iddataset', DataSetCounterController.getByIdDataset);
 
 module.exports = router;

@@ -49,7 +49,8 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
-
+app.use(express.static(__dirname + '/uploads'));
+app.use(express.static(__dirname + '/controllers'));
 app.use('/v1', v1);
 
 // app.use('/', function(req, res){

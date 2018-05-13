@@ -13,7 +13,7 @@ const LogController = require('./../controllers/LogController');
 const LogoOpdController = require('./../controllers/LogoOpdController');
 const BeritaController = require('./../controllers/BeritaController');
 const DataSetCounterController = require('./../controllers/DataSetCounterController');
-const VisitorCounterController = require('./../controllers/VisitorCounterController');
+const FormCounterController = require('./../controllers/FormCounterController');
 const InformasiSitusController = require('./../controllers/InformasiSitusController');
 const passport = require('passport');
 const multer = require('multer');
@@ -134,8 +134,10 @@ router.get('/dataset-counter', DataSetCounterController.getAll);
 router.get('/dataset-counter/:id', DataSetCounterController.get);
 router.get('/dataset-counter/dataset/:iddataset', DataSetCounterController.getByIdDataset);
 
-/* visitor counter */
-router.post('/visitor-counter', VisitorCounterController.create);
-router.get('/visitor-counter', VisitorCounterController.get);
+/* dataset counter */
+router.post('/form-counter/:idform', FormCounterController.create);
+router.get('/form-counter', FormCounterController.getAll);
+router.get('/form-counter/:id', FormCounterController.get);
+router.get('/form-counter/form/:idform', FormCounterController.getByIdForm);
 
 module.exports = router;

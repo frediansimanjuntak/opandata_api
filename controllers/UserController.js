@@ -24,7 +24,7 @@ module.exports.create = create;
 const getOwn = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let user = req.user;
-    LogController.create({username:req.user.username, nip:req.user.NIP, message:"own user"});
+    LogController.create({username:req.user.username, nip:req.user.NIP, message:"own user", detail:""});
     return ReS(res, {user:user.toWeb()});
 }
 module.exports.getOwn = getOwn;
@@ -67,7 +67,7 @@ const getAll = async function(req, res){
         return PegController.getById(u.NIP)
         .then( result => Object.assign( u, { peg: result } ) )
     } ) ).then(function(results) {
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all user"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all user", detail:""});
         return ReS(res, { data:results }, 201)
     } ) )
 }
@@ -83,7 +83,7 @@ const updateOwn = async function(req, res){
         if(err.message=='Validation error') err = 'The email address or phone number is already in use';
         return ReE(res, err);
     }
-    LogController.create({username:req.user.username, nip:req.user.NIP, message:"update own account"});
+    LogController.create({username:req.user.username, nip:req.user.NIP, message:"update own account", detail:""});
     return ReS(res, {message :'Updated User: '+user.username});
 }
 module.exports.updateOwn = updateOwn;
@@ -113,7 +113,7 @@ const remove = async function(req, res){
         truncate: false
     }));
     if(err) return ReE(res, 'error occured trying to delete user');    
-    LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove user"});
+    LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove user", detail:""});
     return ReS(res, {message:'Deleted User'}, 204);
 }
 module.exports.remove = remove;
@@ -124,7 +124,7 @@ const login = async function(req, res){
     let err, user;
     [err, user] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
-    LogController.create({username:user.username, nip:user.NIP, message:"login"});
+    LogController.create({username:user.username, nip:user.NIP, message:"login", detail:""});
     return ReS(res, {token:user.getJWT(), user:user.toWeb()});
 }
 module.exports.login = login; 

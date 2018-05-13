@@ -39,7 +39,7 @@ const update = async function(req, res){
     Logo_opd.update(data, { where: { id: id }
     }).then(logo => {    
         Logo_opd.findById(id).then(logo => {    
-            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update logo"});
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update logo", detail:"id : "+id});
             return ReS(res, {data:logo}, 201);
         });
     });
@@ -55,7 +55,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(logo => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove logo"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove logo", detail:"id : "+id});
         return ReS(res, {message:'Deleted logo'}, 204);
     });
 }

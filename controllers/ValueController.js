@@ -18,7 +18,7 @@ const create = async function(req, res){
             let group = data.length != 0 ? data[0].group : 0;
             value_info.forEach(function(obj) { obj.group = group+1; });
             Value.bulkCreate(value_info).then(results => {
-                LogController.create({username:req.user.username, nip:req.user.NIP, message:"create value"});
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"create value", detail:""});
                 return ReS(res,{value:results}, 201);
             })
         })
@@ -38,7 +38,7 @@ const getAll = async function(req, res){
                 attributes:['id', 'nama']
             }]
         }).then(values => {    
-            LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value"});
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value", detail:""});
             return ReS(res, {data:values}, 201);
         });
     })
@@ -59,7 +59,7 @@ const getAllByField = async function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(values => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value by field"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value by field", detail:"id_field : "+idfield});
         return ReS(res, {data:values}, 201);
     });
 }
@@ -79,7 +79,6 @@ const getAllByFieldNonAuth = async function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(values => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value by field"});
         return ReS(res, {data:values}, 201);
     });
 }
@@ -99,7 +98,7 @@ const getAllByForm = async function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(values => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value by form"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all value by form", detail:"id_form : "+idform});
         return ReS(res, {data:values}, 201);
     });
 }
@@ -133,7 +132,7 @@ const get = function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(value => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get value"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get value", detail:"id : "+id});
         return ReS(res, {data:value}, 201);
     });
 }
@@ -154,7 +153,7 @@ const getByGroup = function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(value => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get value"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get value", detail:"group : "+group});
         return ReS(res, {data:value}, 201);
     });
 }
@@ -175,7 +174,7 @@ const update = async function(req, res){
                 attributes:['id', 'nama']
             }]
         }).then(value => {    
-            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update value"});
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update value", detail:""});
             return ReS(res, {data:value}, 201);
         });
     });
@@ -194,7 +193,7 @@ const updateByGroup = async function(req, res){
     }).then(value => {    
         value_info.forEach(function(obj) { obj.group = group; });
         Value.bulkCreate(value_info).then(results => {
-            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update value"});
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update value", detail:""});
             return ReS(res, {data:results}, 201);
         })
     });
@@ -211,7 +210,7 @@ const removeByGroup = async function(req, res){
         },
         truncate: false
     }).then(value => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove value"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove value", detail:"group : "+group});
         return ReS(res, {message:'Deleted value'}, 204);
     });
 }
@@ -227,7 +226,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(value => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove value"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove value", detail:"id : "+id});
         return ReS(res, {message:'Deleted value'}, 204);
     });
 }

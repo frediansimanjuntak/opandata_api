@@ -11,9 +11,9 @@ const create = async function(req, res){
     let form_info = req.body;
     DataSetController.checkdataset(req.user.id, form_info.id_dataset).then(dataset => {
         if(dataset == true) {
-            Form.create(form_info).then(result => {                
-                LogController.create({username:req.user.username, nip:req.user.NIP, message:"create form"});
-                let form_json = result.toWeb();
+            Form.create(form_info).then(result => { 
+                let form_json = result.toWeb();               
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"create form", detail:"id : "+form_json.id});
                 return ReS(res,{data:form_json}, 201);
             })
         }
@@ -36,7 +36,7 @@ const getAll = async function(req, res){
                 }]
             })
             .then(forms => {    
-                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all form"});
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all form", detail:""});
                 return ReS(res, {data:forms}, 201);
             });
         }
@@ -48,7 +48,7 @@ const getAll = async function(req, res){
                 }]
             })
             .then(forms => {    
-                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all form"});
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all form", detail:""});
                 return ReS(res, {data:forms}, 201);
             });
         } 
@@ -76,7 +76,7 @@ const get = function(req, res){
             attributes:['id', 'nama']
         }]
     }).then(form => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get form"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get form", detail:"id : "+id});
         return ReS(res, {data:form}, 201);
     });
 }
@@ -106,7 +106,7 @@ const update = async function(req, res){
                 attributes:['id', 'nama']
             }]
         }).then(form => {    
-            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update form"});
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update form", detail:"id : "+id});
             return ReS(res, {data:form}, 201);
         });
     });
@@ -122,7 +122,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(form => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove form"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove form", detail:"id : "+id});
         return ReS(res, {message:'Deleted form'}, 204);
     });
 }

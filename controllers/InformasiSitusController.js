@@ -12,7 +12,9 @@ const create = async function(req, res){
     console.log(data);
     [err, informasi] = await to(Informasi_situs.create(data));
     if(err) return ReE(res, err, 422);
-    return ReS(res, {data:informasi.toWeb()});
+    let result = informasi.toWeb()
+    LogController.create({username:req.user.username, nip:req.user.NIP, message:"create informasi", detail:"id : "+result.id});
+    return ReS(res, {data:result});
 }
 module.exports.create = create;
 
@@ -44,7 +46,7 @@ const update = async function(req, res){
     Informasi_situs.update(data, { where: { id: id }
     }).then(informasi => {    
         Informasi_situs.findById(id).then(informasi => {    
-            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update informasi"});
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update informasi", detail:"id : "+id});
             return ReS(res, {data:informasi}, 201);
         });
     });
@@ -60,7 +62,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(informasi => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove informasi"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove informasi", detail:"id : "+id});
         return ReS(res, {message:'Deleted informasi'}, 204);
     });
 }

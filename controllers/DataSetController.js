@@ -12,8 +12,8 @@ const create = async function(req, res){
         console.log(user);
         if(user == true) {            
             DataSet.create(dataset_info).then(result => {
-                LogController.create({username:req.user.username, nip:req.user.NIP, message:"create dataset"});
                 let dataset_json = result.toWeb();
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"create dataset", detail:"id : "+dataset_json.id});
                 return ReS(res,{data:dataset_json}, 201);
             })
         }
@@ -31,13 +31,13 @@ const getAll = async function(req, res){
             DataSet.findAll({where: {
                 id_opd:opd
             }}).then(datasets => {    
-                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset"});
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset", detail:""});
                 return ReS(res, {data:datasets}, 201);
             });
         }
         else {            
             DataSet.findAll().then(datasets => {    
-                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset"});
+                LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all dataset", detail:""});
                 return ReS(res, {data:datasets}, 201);
             });
         }
@@ -82,7 +82,7 @@ const get = function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let id = req.params.id;
     DataSet.findById(id).then(dataset => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get dataset"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get dataset", detail:"id : "+id});
         return ReS(res, {data:dataset}, 201);
     });
 }
@@ -102,7 +102,7 @@ const update = async function(req, res){
     DataSet.update(dataset_info, { where: { id: id }
     }).then(dataset => {    
         DataSet.findById(id).then(dataset => {    
-            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update dataset"});
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update dataset", detail:"id : "+id});
             return ReS(res, {data:dataset}, 201);
         });
     });
@@ -118,7 +118,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(dataset => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove dataset"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove dataset", detail:"id : "+id});
         return ReS(res, {message:'Deleted dataset'}, 204);
     });
 }

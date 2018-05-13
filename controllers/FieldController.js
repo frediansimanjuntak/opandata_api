@@ -10,7 +10,7 @@ const create = async function(req, res){
 
     [err, field] = await to(Field.bulkCreate(field_info));
     if(err) return ReE(res, err, 422);
-    LogController.create({username:req.user.username, nip:req.user.NIP, message:"create field"});
+    LogController.create({username:req.user.username, nip:req.user.NIP, message:"create field", detail:""});
     return ReS(res, {data:field}, 201);
 }
 module.exports.create = create;
@@ -23,7 +23,7 @@ const getAll = async function(req, res){
             attributes:['id', 'nama', 'id_dataset']
         }]
     }).then(fields => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all field"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all field", detail:""});
         return ReS(res, {data:fields}, 201);
     });
 }
@@ -40,7 +40,7 @@ const getAllByForm = async function(req, res){
             attributes:['id', 'nama', 'id_dataset']
         }]
     }).then(fields => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all field by form"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get all field by form", detail:""});
         return ReS(res, {data:fields}, 201);
     });
 }
@@ -64,7 +64,7 @@ const get = function(req, res){
             attributes:['id', 'nama', 'id_dataset']
         }]
     }).then(field => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get field"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"get field", detail:"id : "+id});
         return ReS(res, {data:field}, 201);
     });
 }
@@ -93,7 +93,7 @@ const update = async function(req, res){
                 attributes:['id', 'nama', 'id_dataset']
             }]
         }).then(field => {    
-            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update field"});
+            LogController.create({username:req.user.username, nip:req.user.NIP, message:"update field", detail:"id : "+id});
             return ReS(res, {data:field}, 201);
         });
     });
@@ -109,7 +109,7 @@ const remove = async function(req, res){
         },
         truncate: false
     }).then(field => {    
-        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove field"});
+        LogController.create({username:req.user.username, nip:req.user.NIP, message:"remove field", detail:"id : "+id});
         return ReS(res, {message:'Deleted field'}, 204);
     });
 }

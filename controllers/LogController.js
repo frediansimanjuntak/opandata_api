@@ -7,11 +7,12 @@ const create = function(req, res){
     let username = req.username;
     let nip = req.nip;
     let message = req.message;   
+    let detail = req.detail ? "["+ req.detail +"]":"";
 
     let dateTime = require('node-datetime');
     let dt = dateTime.create();
     let formatted = dt.format('Y-m-d H:M:S');
-    log.info('['+ formatted +'] ['+ nip +' - '+ username +'] ['+message+']');
+    log.info('['+ formatted +'] ['+ nip +' - '+ username +'] ['+ message +'] '+detail);
 }
 module.exports.create = create;
 

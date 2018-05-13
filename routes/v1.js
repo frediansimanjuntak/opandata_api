@@ -13,6 +13,7 @@ const LogController = require('./../controllers/LogController');
 const LogoOpdController = require('./../controllers/LogoOpdController');
 const BeritaController = require('./../controllers/BeritaController');
 const DataSetCounterController = require('./../controllers/DataSetCounterController');
+const VisitorCounterController = require('./../controllers/VisitorCounterController');
 const InformasiSitusController = require('./../controllers/InformasiSitusController');
 const passport = require('passport');
 const multer = require('multer');
@@ -127,10 +128,14 @@ router.get('/logo-opd/:id', LogoOpdController.get);
 router.delete('/logo-opd/:id', passport.authenticate('jwt', {session:false}), LogoOpdController.remove);
 router.put('/logo-opd/:id', passport.authenticate('jwt', {session:false}), upload.single('photo'), LogoOpdController.update);
 
-/* Logo opd */
+/* dataset counter */
 router.post('/dataset-counter/:iddataset', DataSetCounterController.create);
 router.get('/dataset-counter', DataSetCounterController.getAll);
 router.get('/dataset-counter/:id', DataSetCounterController.get);
 router.get('/dataset-counter/dataset/:iddataset', DataSetCounterController.getByIdDataset);
+
+/* visitor counter */
+router.post('/visitor-counter', VisitorCounterController.create);
+router.get('/visitor-counter', VisitorCounterController.get);
 
 module.exports = router;

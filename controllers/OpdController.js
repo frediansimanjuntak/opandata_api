@@ -1,4 +1,5 @@
 var request = require("request");
+const DataSet = require('../models').dataset;
 const UserController = require('./UserController');
 
 const url = "http://tanjungpinangkota.go.id/api/unitkerjA";
@@ -30,7 +31,18 @@ const getAllNonAuth = function(req, res){
         json: true
     }, function (error, response, body) {    
         if (!error && response.statusCode === 200) {
-            return ReS(res, {data:body.opd}, 201);
+            let opd = body.opd;
+            Promise.all(opd.map(_opd => {
+                return DataSet.findOne({ where: {id_opd: _opd.id_opd} }).then(dataset => {
+                    if(dataset){
+                        console.log(_opd)
+                        return _opd;
+                    }
+                })
+            } ) )
+            .then(result => {
+                return ReS(res, {data:result}, 201);
+            })
         }
     })
 }

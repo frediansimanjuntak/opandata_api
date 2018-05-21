@@ -41,7 +41,8 @@ const getAllNonAuth = function(req, res){
                 })
             } ) )
             .then(result => {
-                return ReS(res, {data:result}, 201);
+                let arr = result.filter(v=>v!=null);
+                return ReS(res, {data:arr}, 201);
             })
         }
     })
